@@ -1,0 +1,1490 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b0b0f" />
+  <meta name="description" content="RynnWorld-4D Website" />
+  <title>RynnWorld-4D</title>
+  <link rel="icon" href="assets/head.png" type="image/png" />
+  <!-- 图标库（按钮图标用） -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    .dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: -20px; /* 向上延伸 20px 填补空隙 */
+  left: 0;
+  width: 100%;
+  height: 20px;
+  /* background: red; 测试时可以取消注释看看这个隐形桥的位置 */
+}
+  /* =========================
+   下拉菜单按钮样式
+========================= */
+/* 1. 容器：用来包裹按钮和菜单 */
+.pill-dropdown {
+  position: relative; /* 关键：让子菜单相对于它定位 */
+  display: inline-block;
+}
+
+/* 2. 触发按钮（原本的 pill 样式微调） */
+.pill-dropdown .pill.trigger {
+  cursor: default; /* 鼠标放上去不显示手型，或者保留 pointer */
+  padding-right: 12px; /* 给右边的小箭头留点空间 */
+}
+
+/* 3. 下拉菜单本体 (默认隐藏) */
+.dropdown-menu {
+  display: none; /* 默认不显示 */
+  position: absolute;
+  top: 110%; /* 在按钮正下方，留一点点缝隙 */
+  left: 50%;
+  transform: translateX(-50%); /* 水平居中 */
+  background: var(--panel); /* 跟随主题背景 */
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 6px;
+  min-width: 140px; /* 菜单最小宽度 */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  z-index: 100; /* 保证浮在最上面 */
+  backdrop-filter: blur(12px); /* 磨砂玻璃效果 */
+  text-align: left;
+}
+
+/* 4. 鼠标悬停在容器上时，显示菜单 */
+.pill-dropdown:hover .dropdown-menu {
+  display: block;
+  animation: fadeIn 0.2s ease;
+}
+
+/* 5. 菜单里的子按钮样式 */
+.dropdown-menu a {
+  display: block;
+  padding: 8px 12px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background 0.2s;
+  white-space: nowrap; /* 防止文字换行 */
+}
+
+.dropdown-menu a:hover {
+  background: rgba(127, 127, 127, 0.15); /* 鼠标悬停变色 */
+  color: var(--text);
+}
+
+/* 简单的淡入动画 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+    /* === 新增：3列布局样式 === */
+.carousel.three-col .demo-card {
+  /* 计算公式：(100% - 2个间隙) / 3 */
+  flex: 0 0 calc((100% - 36px) / 3);
+}
+
+/* 手机端依然强制单列，防止太挤 */
+@media (max-width: 768px) {
+  .carousel.three-col .demo-card {
+    flex: 0 0 100%;
+  }
+}
+    /* 切换按钮样式 */
+.lang-switch {
+  display: flex;
+  background: color-mix(in srgb, var(--panel) 80%, transparent);
+  border: 1px solid var(--border);
+  padding: 4px;
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+}
+
+.l-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  padding: 6px 18px; /* 稍微加宽一点点 */
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.l-btn:hover { color: var(--text); }
+
+/* 选中状态 */
+.l-btn.active {
+  background: var(--text);
+  color: var(--bg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+    /* =========================
+       Logo 自动切换逻辑 (Light/Dark)
+    ========================= */
+    /* 默认（亮色模式）：显示 light，隐藏 dark */
+    .corner-logos .logo-light { display: block; }
+    .corner-logos .logo-dark  { display: none; }
+
+    /* === 暗色模式触发条件 1: 系统偏好是暗色 且 没有手动强制切回亮色 === */
+    @media (prefers-color-scheme: dark) {
+      html:not([data-theme="light"]) .corner-logos .logo-light { display: none; }
+      html:not([data-theme="light"]) .corner-logos .logo-dark  { display: block; }
+    }
+
+    /* === 暗色模式触发条件 2: 手动强制暗色 (data-theme="dark") === */
+    html[data-theme="dark"] .corner-logos .logo-light { display: none; }
+    html[data-theme="dark"] .corner-logos .logo-dark  { display: block; }
+.carousel.two-col .demo-card {
+  /* 假设 gap 是 18px，那么 50% 减去 9px 刚好。减去 10px 留出一点点安全余量 */
+  flex: 0 0 calc(50% - 10px);
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* 关键1：取消固定的卡片占位比例，让它自适应特殊的视频比例 */
+.carousel.two-col .frame {
+  aspect-ratio: auto; /* 取消默认的 16/9 等比例限制 */
+  width: 100%;
+  height: auto;
+  background: var(--bg); /* 如果视频有黑边，可以和背景融为一体 */
+}
+
+/* 关键2：确保视频内容完整显示（contain），绝不裁切（cover） */
+.carousel.two-col .frame video {
+  width: 100%;
+  height: auto;
+  object-fit: contain; /* contain 保证完整显示所有边缘，而不是 cover 的强制填满并裁切 */
+  display: block; /* 去除底部默认的幽灵空白 */
+}
+
+/* 手机端依然保持单排，防止视频缩得太小看不清 */
+@media (max-width: 768px) {
+  .carousel.two-col .demo-card {
+    flex: 0 0 100%;
+  }
+}
+/* 手机端依然保持 1 个，防止太挤 */
+@media (max-width: 768px) {
+  .carousel.two-col .demo-card {
+    flex: 0 0 100%;
+  }
+}
+.adaptive-grid {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  /* 关键：拉伸对齐，让所有卡片高度一致（以最高的为准） */
+  align-items: stretch; 
+  justify-content: center;
+}
+
+.adaptive-grid .hitem {
+  /* 关键：平分空间 */
+  flex: 1;
+  /* 限制一下，防止单张图时变得巨大，或者为了美观 */
+  /* 如果你想强制最多3个填满，不用改这里，HTML放3个div即可 */
+  width: auto; 
+  max-width: 100%; 
+  
+  display: flex;
+  flex-direction: column;
+}
+
+/* 让图片在卡片里自适应，并加上放大镜手势 */
+.adaptive-grid .hitem img {
+  width: 100%;
+  height: 100%; /* 撑满高度 */
+  object-fit: contain; /* 保持比例，如果卡片被拉高，图片居中不裁剪 */
+  background: #fff; /* 防止透明PNG在拉伸区域显得奇怪，可选 */
+  cursor: zoom-in; /* 鼠标放上去显示放大镜 */
+  transition: opacity 0.2s;
+}
+.adaptive-grid .hitem img:hover {
+  opacity: 0.9;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.9); /* 背景黑一点，沉浸感强 */
+  backdrop-filter: blur(5px);      /* 背景稍微模糊 */
+  
+  /* 关键改动 1：不再用 flex 强制居中，而是允许内容溢出滚动 */
+  display: block;      
+  overflow-y: auto;   /* 开启垂直滚动条 */
+  overflow-x: hidden; /* 只有极宽的图才需要x轴滚动，通常y轴够了 */
+  
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  
+  /* 给上下留点呼吸空间，防止图片贴边 */
+  padding: 40px 0; 
+  text-align: center; /* 保证图片水平居中 */
+  cursor: zoom-out;
+}
+
+.lightbox.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.lightbox img {
+  /* 关键改动 2：宽度限制在屏幕内，但高度不限制 */
+  max-width: 90vw;  /* 宽度最多占屏幕90%，防止太宽 */
+  width: auto;      /* 保持比例 */
+  height: auto;     /* 高度自然撑开！长图就会很长 */
+  max-height: none; /* 绝对不要限制最大高度 */
+  
+  display: inline-block; /* 配合 text-align: center */
+  vertical-align: middle;
+  
+  border-radius: 4px;
+  box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+  
+  /* 简单的出现动画 */
+  transform: scale(0.96);
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.lightbox.active img {
+  transform: scale(1);
+}
+    /* =========================
+       THEME TOKENS
+       默认：跟随系统（prefers-color-scheme）
+       手动切换：html[data-theme="dark|light"]
+    ========================= */
+    :root{
+      --maxw: 1200px;
+      --radius-lg: 26px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+
+      --shadow: 0 18px 60px rgba(0,0,0,0.55);
+
+      /* 圆润字体 */
+      --font: ui-rounded, "SF Pro Rounded",
+              "Nunito", "Quicksand", system-ui, -apple-system,
+              "PingFang SC","Microsoft YaHei", sans-serif;
+    }
+
+/* 系统偏好：暗色 */
+@media (prefers-color-scheme: dark){
+  :root{
+--bg: #0b0e14;    
+--text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+
+    --panel: rgba(255,255,255,0.06);
+    --panel2: rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.14);
+    --border2: rgba(255,255,255,0.10);
+
+    /* ✅ 背景：暗色更“夜景” */
+    --video-brightness: 0.45;
+    --fallback-brightness: 0.4;
+
+    /* 背景罩层：黑色轻染 */
+    --bg-tint: 11, 14, 20;    /* 背景罩层跟背景色一致 */
+        --bg-tint-opacity: 0.60;  /* 稍微透一点，让后面的光晕显出来 */
+
+    /* 晕影：暗色 */
+--title-gradient: linear-gradient(90deg, #a78bfa, #ffffff, #60a5fa);
+    --title-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    /* ✅ 关键：深蓝-紫色光晕变量 */
+        /* spot1: 顶部主光 (淡紫白) */
+        --spot1: rgba(167, 139, 250, 0.12); 
+        /* spot2: 左侧光 (深蓝) */
+        --spot2: rgba(59, 130, 246, 0.10);
+        /* spot3: 右侧光 (紫色) */
+        --spot3: rgba(139, 92, 246, 0.10);
+        
+        /* 晕影遮罩：中间透亮，四周渐变到深空蓝 */
+        --vignette-inner: transparent;
+        --vignette-outer: #0b0e14; /* 跟背景色一致 */
+  }
+}
+
+/* 系统偏好：亮色 */
+@media (prefers-color-scheme: light){
+  :root{
+    --bg: #f7f7fb;
+    --text: rgba(10,12,18,0.92);
+    --muted: rgba(10,12,18,0.62);
+
+    --panel: rgba(255,255,255,0.72);
+    --panel2: rgba(255,255,255,0.55);
+    --border: rgba(10,12,18,0.12);
+    --border2: rgba(10,12,18,0.10);
+
+    /* ✅ 背景：亮色更“日光” */
+    --video-brightness: 0.98;     /* 关键：不要再压暗 */
+    --fallback-brightness: 1.02;
+
+    /* 背景罩层：白色轻染（让整体变浅） */
+    --bg-tint: 255,255,255;
+    --bg-tint-opacity: 0.46;
+    --title-gradient: linear-gradient(90deg, #263048, #111827, #1d4ed8);
+    --title-shadow: 0 10px 24px rgba(0,0,0,0.10);
+    /* 晕影：亮色（用白雾而不是黑雾） */
+    --vignette-inner: rgba(255,255,255,0.25);
+    --vignette-outer: rgba(247,247,251,0.92);
+  }
+}
+
+/* 手动强制暗色 */
+html[data-theme="dark"]{
+  --bg: #0b0e14;    
+--text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+
+    --panel: rgba(255,255,255,0.06);
+    --panel2: rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.14);
+    --border2: rgba(255,255,255,0.10);
+
+    /* ✅ 背景：暗色更“夜景” */
+    --video-brightness: 0.45;
+    --fallback-brightness: 0.4;
+
+    /* 背景罩层：黑色轻染 */
+    --bg-tint: 11, 14, 20;    /* 背景罩层跟背景色一致 */
+        --bg-tint-opacity: 0.60;  /* 稍微透一点，让后面的光晕显出来 */
+
+    /* 晕影：暗色 */
+--title-gradient: linear-gradient(90deg, #a78bfa, #ffffff, #60a5fa);
+    --title-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    /* ✅ 关键：深蓝-紫色光晕变量 */
+        /* spot1: 顶部主光 (淡紫白) */
+        --spot1: rgba(167, 139, 250, 0.12); 
+        /* spot2: 左侧光 (深蓝) */
+        --spot2: rgba(59, 130, 246, 0.10);
+        /* spot3: 右侧光 (紫色) */
+        --spot3: rgba(139, 92, 246, 0.10);
+        
+        /* 晕影遮罩：中间透亮，四周渐变到深空蓝 */
+        --vignette-inner: transparent;
+        --vignette-outer: #0b0e14; /* 跟背景色一致 */
+}
+
+/* 手动强制亮色 */
+html[data-theme="light"]{
+  --bg: #f7f7fb;
+  --text: rgba(10,12,18,0.92);
+  --muted: rgba(10,12,18,0.62);
+  --panel: rgba(255,255,255,0.72);
+  --panel2: rgba(255,255,255,0.55);
+  --border: rgba(10,12,18,0.12);
+  --border2: rgba(10,12,18,0.10);
+  --title-gradient: linear-gradient(90deg, #263048, #111827, #1d4ed8);
+  --title-shadow: 0 10px 24px rgba(0,0,0,0.10);
+  --video-brightness: 0.98;
+  --fallback-brightness: 1.02;
+  --bg-tint: 255,255,255;
+  --bg-tint-opacity: 0.46;
+  --vignette-inner: rgba(255,255,255,0.25);
+  --vignette-outer: rgba(247,247,251,0.92);
+}
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x:hidden;
+    }
+
+    /* ===== 背景层：视频优先，失败则 fallback 图 ===== */
+.bg-layer{
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: #000;
+}
+
+/* ✅ 新增：背景染色罩层（随主题变黑/变白） */
+.bg-layer::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(var(--bg-tint), var(--bg-tint-opacity));
+  pointer-events:none;
+}
+
+#bg-video{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(var(--video-brightness)) saturate(1.05);
+}
+
+.bg-fallback{
+  position:absolute;
+  inset:0;
+  background: url("assets/bg.jpg") center/cover no-repeat;
+  filter: brightness(var(--fallback-brightness)) saturate(1.05);
+  opacity: 0.92;
+  display:none;
+}
+
+.vignette{
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(80% 60% at 50% 0%, rgba(255,255,255,0.08), transparent 60%),
+    radial-gradient(70% 60% at 20% 30%, rgba(102,146,241,0.10), transparent 60%),
+    radial-gradient(70% 60% at 80% 35%, rgba(220,38,38,0.10), transparent 60%),
+    radial-gradient(120% 110% at 50% 100%, var(--vignette-inner), var(--vignette-outer));
+  pointer-events:none;
+}
+
+
+    .container{
+      width: min(var(--maxw), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* ===== 左上角：学校+公司 Logo ===== */
+    .corner-logos{
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      z-index: 40;
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--panel) 90%, transparent);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .corner-logos img{
+      height: 26px;
+      width: auto;
+      display:block;
+      opacity: 0.95;
+    }
+
+    /* ===== 右上角：主题切换按钮（默认跟随系统） ===== */
+    .theme-toggle{
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 40;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--panel) 90%, transparent);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      user-select:none;
+    }
+    .theme-btn{
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--panel2) 95%, transparent);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: 750;
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      transition: transform .15s ease, background .2s ease;
+    }
+    .theme-btn:hover{ transform: translateY(-1px); }
+    .theme-hint{
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    /* ===== Hero ===== */
+    .hero{
+      padding: 120px 0 28px;
+      text-align:center;
+      position: relative;
+    }
+
+    /* 标题区：左侧项目 logo + 右侧标题 */
+    .title-row{
+        flex-direction: column;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .project-logo{
+      height: 128px;
+      width: auto;
+      border-radius: 16px;
+        background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+    }
+
+    .title{
+      margin: 0;
+      font-size: clamp(34px, 5vw, 74px);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      font-weight: 900;
+
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+        background: var(--title-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: var(--title-shadow);
+    }
+    h1.title{
+      font-size: clamp(38px, 5.8vw, 82px);
+    }
+    h2.title{
+      font-size: clamp(26px, 3.8vw, 56px);
+    }
+
+    .subtitle{
+      margin: 14px auto 20px;
+      max-width: 980px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+      font-weight: 650;
+    }
+
+    .authors{
+      margin: 10px auto 8px;
+      max-width: 980px;
+      color: color-mix(in srgb, var(--text) 92%, transparent);
+      font-size: 18px;
+      font-weight: 750;
+    }
+    .authors .a{
+      display:inline-block;
+      margin: 0 10px 8px;
+      white-space: nowrap;
+    }
+    .authors .a a{
+      color: inherit;
+      text-decoration: none;
+    }
+    .authors .a a:hover{
+      text-decoration: underline;
+    }
+
+    .aff{
+      margin: 0 auto 24px;
+      color: color-mix(in srgb, var(--text) 82%, transparent);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    /* ===== 圆角胶囊按钮（带图标） ===== */
+    .pill-row{
+      display:flex;
+      justify-content:center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 18px auto 28px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      text-decoration:none;
+      color: var(--text);
+      background: color-mix(in srgb, var(--panel) 92%, transparent);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.18);
+      transition: transform .15s ease, background .2s ease, border-color .2s ease;
+      font-weight: 800;
+    }
+    .pill:hover{
+      transform: translateY(-2px);
+      background: color-mix(in srgb, var(--panel) 100%, transparent);
+      border-color: color-mix(in srgb, var(--border) 140%, transparent);
+    }
+
+    /* ===== Panels (glass) ===== */
+    .panel{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .panel.soft{
+      background: var(--panel2);
+      border: 1px solid var(--border2);
+      box-shadow: 0 16px 50px rgba(0,0,0,0.25);
+    }
+
+    section{ padding: 34px 0; }
+
+    .h2{
+      margin: 0 0 16px;
+      font-size: clamp(26px, 2.6vw, 44px);
+      font-weight: 900;
+      text-align: center;
+      letter-spacing: -0.01em;
+      color: color-mix(in srgb, var(--text) 96%, transparent);
+      text-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    }
+    .desc{
+      margin: 0 auto 18px;
+      max-width: 980px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+      font-weight: 650;
+    }
+
+    /* ===== Frames ===== */
+    .frame{
+      border-radius: var(--radius-lg);
+      border: 1px solid color-mix(in srgb, var(--border) 105%, transparent);
+      overflow: hidden;
+      background: color-mix(in srgb, var(--bg) 40%, #000);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.30);
+    }
+    video, img{ width: 100%; display:block; }
+    .video{
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      background:#000;
+    }
+
+    /* ===== Promo video ===== */
+    .promo-wrap{
+      width: min(1100px, 100%);
+      margin: 0 auto;
+      padding: 10px;
+      border-radius: calc(var(--radius-lg) + 8px);
+      background: color-mix(in srgb, var(--panel) 95%, transparent);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 20px 70px rgba(0,0,0,0.25);
+    }
+    .promo-inner{
+      border-radius: var(--radius-lg);
+      overflow:hidden;
+      border: 1px solid var(--border);
+      background:#000;
+    }
+    .promo-inner video{
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: contain;
+      background:#000;
+    }
+
+    /* ===== Abstract ===== */
+    .abstract{
+      padding: 30px 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .abstract p{
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.85;
+      color: color-mix(in srgb, var(--text) 92%, transparent);
+      text-align: left;
+      text-indent: 2em;
+      font-weight: 600;
+    }
+
+    /* =========================
+       Results: 两排横向滚动（不换行）
+    ========================= */
+    .h3-row{
+      text-align:center;
+      font-weight: 900;
+      font-size: 20px;
+      margin: 18px 0 10px;
+      color: color-mix(in srgb, var(--text) 92%, transparent);
+    }
+
+    .hscroll-wrap{
+      position: relative;
+      margin-top: 12px;
+    }
+    .hscroll{
+      display:flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 12px 4px 14px;
+      scrollbar-width: thin;
+    }
+    .hscroll::-webkit-scrollbar{ height: 10px; }
+    .hscroll::-webkit-scrollbar-thumb{
+      background: color-mix(in srgb, var(--border) 160%, transparent);
+      border-radius: 999px;
+    }
+    .hitem{
+      flex: 0 0 auto;
+      width: min(360px, 80vw);
+      scroll-snap-align: start;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: var(--panel2);
+      overflow:hidden;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.18);
+    }
+    .hitem img{ width: 100%; display:block; }
+    .hcap{
+      padding: 10px 12px;
+      font-size: 14px;
+      color: var(--muted);
+      border-top: 1px solid var(--border2);
+      font-weight: 650;
+      text-align:center;
+    }
+
+    /* =========================
+       Demos: 三卡滑动（按钮翻页）
+    ========================= */
+    .carousel{
+      position: relative;
+      margin-top: 10px;
+    }
+
+    /* 多行轮播共用 panel 背景时，卡片不再叠一层半透明 */
+    .carousel .demo-card.panel.soft{
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+    /* 无需轮播时，两列响应式视频网格 */
+    .video-grid{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+    @media (max-width: 768px){
+      .video-grid{
+        grid-template-columns: 1fr;
+      }
+    }
+    .video-grid-card{
+      border-radius: var(--radius-lg);
+    }
+    .video-grid .video{
+      object-fit: contain;
+      aspect-ratio: auto;
+    }
+
+    .carousel-viewport{
+      overflow: hidden; /* 关键：只显示 3 个宽度区域 */
+    }
+
+    .carousel-track{
+      display:flex;
+      gap: 18px;
+      will-change: transform;
+      transition: transform .35s ease;
+      padding: 10px 2px 2px;
+    }
+
+    /* 关键：一次显示 3 个 */
+    .demo-card{
+      flex: 0 0 calc((100% - 3 * 18px) / 4);
+      padding: 12px;
+      border-radius: var(--radius-lg);
+    }
+    .demo-title{
+      margin: 10px 0 2px;
+      font-weight: 900;
+      text-align:center;
+      font-size: 16px;
+    }
+    .demo-desc {
+  /* 原有样式 */
+  margin: 0 0 6px;
+  text-align: center; /* 居中对齐，如果不喜欢可以改成 left */
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 650;
+
+  /* ✅ 新增/修改以下几行来实现 Flexible 换行 */
+  white-space: normal;       /* 核心：允许文本自动换行 */
+  overflow-wrap: break-word; /* 核心：如果一行放不下，强制断行 */
+  word-wrap: break-word;     /* 兼容旧浏览器 */
+  line-height: 1.5;          /* 多行文本增加行高，防止挤在一起 */
+  height: auto;              /* 让高度自动撑开，不要限制高度 */
+}
+
+    .car-btn{
+      position:absolute;
+      top: 50%;
+      transform: translateY(-55%);
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--panel) 92%, transparent);
+      color: var(--text);
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      z-index: 5;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform .15s ease, opacity .2s ease;
+    }
+    .car-btn:hover{ transform: translateY(-55%) scale(1.06); }
+    .car-btn[disabled]{ opacity: .35; cursor:not-allowed; }
+
+    .car-btn.left{ left: -10px; }
+    .car-btn.right{ right: -10px; }
+
+    .car-dots{
+      display:flex;
+      justify-content:center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .dot{
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--border) 160%, transparent);
+      opacity: .55;
+    }
+    .dot.active{ opacity: 1; width: 18px; }
+
+    /* ===== BibTeX ===== */
+    .bib-wrap{
+      text-align:center;
+      padding: 26px 18px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .bib-head{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .copy-btn{
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--panel2) 95%, transparent);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 8px 14px;
+      cursor:pointer;
+      font-weight: 850;
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      transition: transform .15s ease, background .2s ease;
+    }
+    .copy-btn:hover{ transform: translateY(-2px); }
+    pre{
+      margin: 0 auto;
+      text-align:left;
+      max-width: 980px;
+      background: color-mix(in srgb, var(--bg) 70%, #000);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 18px;
+      overflow:auto;
+      color: color-mix(in srgb, var(--text) 95%, transparent);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.18);
+    }
+    code{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+    .footer{
+      padding: 46px 0 60px;
+      text-align:center;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 980px){
+      .demo-card{ flex: 0 0 calc((100% - 1 * 18px) / 2); }
+    }
+    @media (max-width: 640px){
+      .container{ width: min(var(--maxw), calc(100% - 24px)); }
+      .corner-logos, .theme-toggle{
+        top: 12px;
+        padding: 8px 10px;
+      }
+      .corner-logos{ left: 12px; }
+      .theme-toggle{ right: 12px; }
+      .corner-logos img{ height: 22px; }
+
+      .demo-card{ flex: 0 0 100%; }
+      .car-btn.left{ left: -6px; }
+      .car-btn.right{ right: -6px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 背景 -->
+  <div class="bg-layer">
+    <video id="bg-video" autoplay muted loop playsinline>
+      <source src="assets/bg.mp4" type="video/mp4">
+    </video>
+    <div class="bg-fallback"></div>
+  </div>
+  <div class="vignette"></div>
+
+  <!-- 左上角：学校+公司logo -->
+  <div class="corner-logos" aria-label="Affiliation logos">
+
+    <img class="logo-light" src="assets/damo-logo-1.png" alt="School Logo Light">
+    
+    <img class="logo-dark" src="assets/damo-logo-2.png" alt="School Logo Dark">
+    <img src="assets/logo-school.png" alt="Company Logo">
+    <img src="assets/logo-lab.jpg" alt="Company Logo">
+  </div>
+
+  <!-- 右上角：主题切换（默认随系统） -->
+  <div class="theme-toggle">
+    <button class="theme-btn" id="toggleTheme" type="button">
+      <i class="fa-solid fa-circle-half-stroke"></i>
+      Light / Night
+    </button>
+    <span class="theme-hint" id="themeHint">Auto</span>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container">
+      <div class="title-row">
+        <!-- 项目logo（在标题左边） -->
+        <!-- <img class="project-logo" src="assets/logo.png" alt="Project Logo"> -->
+        <h1 class="title">RynnWorld-4D</h1>
+        <h2 class="title">4D Embodied World Models for Robotic Manipulation</h2>
+      </div>
+
+      <div class="authors">
+        <span class="a"><a href="https://maxwell-zhao.github.io/" target="_blank" rel="noopener">Haoyu Zhao<sup>*</sup></a></span>
+        <span class="a">Xingyue Zhao<sup>*</sup></span>
+        <span class="a">Siteng Huang<sup>‡</sup></span>
+        <span class="a">Xin Li<sup></sup></span>
+        <span class="a">Deli Zhao<sup>‡</sup></span>
+        <span class="a">Zhongyu Li<sup>‡</sup></span>
+
+        
+      </div>
+      
+      <div class="aff" style="font-size: 15px; margin-top: 10px; color: var(--muted);">
+        <span style="display:inline-block; margin: 0 10px;">
+          <sup>*</sup> Core contributors
+        </span>
+        <span style="display:inline-block; margin: 0 10px;">
+          <sup>‡</sup> Correspondence
+        </span>
+      </div>
+
+      <!-- 图标按钮 -->
+      <div class="pill-row">
+        <a class="pill" href="https://github.com/alibaba-damo-academy/RynnWorld-4D" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a class="pill" href="https://arxiv.org/pdf/2607.06559" target="_blank" rel="noopener"><i class="fa-regular fa-file-lines"></i> Paper </a>
+        <!-- <a class="pill" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-book-open"></i> ArXiv(Soon)</a> -->
+        <a class="pill" href="https://huggingface.co/Alibaba-DAMO-Academy/RynnWorld-4D" target="_blank" rel="noopener"><i class="fa-solid fa-face-smile"></i> Huggingface</a>
+        <a class="pill" href="https://www.modelscope.cn/models/DAMO_Academy/RynnWorld-4D" target="_blank" rel="noopener"><i class="fa-regular fa-file-lines"></i>modelscope</a>
+        <a class="pill" href="https://www.youtube.com/watch?v=mKw_r_fsrRg&feature=youtu.be" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i> YouTube</a>
+      </div>
+
+      <!-- 宣传视频  -->
+      <section>
+      <div class="container"> 
+        <!-- <div style="display: flex; justify-content: center; margin-bottom: 16px;">
+          <div class="lang-switch">
+            <button class="l-btn active" onclick="switchVideo('en')" type="button">English</button>
+            <button class="l-btn" onclick="switchVideo('zh')" type="button">中文版</button>
+          </div>
+        </div> -->
+
+        <div class="promo-wrap"> 
+          <div class="promo-inner">
+            <video 
+              id="mainVideo" 
+              src="assets/RynnWorld-4D.mp4" 
+              poster="assets/RynnWorld-4D-poster.jpg" 
+              controls 
+              playsinline>
+            </video>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Abstract -->
+    <section>
+      <h2 class="h2">Abstract</h2>
+      <div class="panel abstract">
+    <p>
+      We present <strong>RynnWorld-4D</strong>, a novel 4D embodied world model that shifts the paradigm from 2D pixel prediction to physically grounded 4D scene evolution. By co-generating synchronized RGB, depth, and optical flow (RGB-DF), RynnWorld-4D captures the underlying 3D geometry and temporal motion trajectories, creating a representation space that effectively bridges the gap between generative world modeling and low-level robotic control. We release RynnWorld-4D as a unified diffusion framework featuring a specialized tri-branch architecture, alongside RynnWorld-4D‑Policy (an inverse dynamics head for high-frequency, closed-loop bimanual manipulation).
+    </p>
+
+    <h3 style="text-align: left; margin: 24px 0 12px; font-size: 20px; display: flex; align-items: center; gap: 8px;">
+      🌟 Key Highlights
+    </h3>
+    
+    <ul style="text-align: left; padding-left: 20px; line-height: 1.6;">
+      <li style="margin-bottom: 10px;">
+        <strong>Projective 4D Representation:</strong><br>
+        Integrates RGB, Depth, and Optical Flow into a unified RGB-DF format, allowing pixels to be unprojected into metric 3D scene flow for precise geometric and kinetic grounding.
+      </li>
+      <li style="margin-bottom: 10px;">
+        <strong>Tri-branch Diffusion Architecture:</strong><br>
+        Employs three dedicated transformer branches with mutual cross-modal attention, ensuring that appearance, geometry, and motion evolve with high spatio-temporal consistency.
+      </li>
+      <li style="margin-bottom: 10px;">
+        <strong>Action-from-Latent Policy:</strong><br>
+        RynnWorld-4D-Policy bypasses expensive multi-step denoising by directly consuming internal 4D latents, enabling high-frequency (9Hz+), closed-loop dexterous control.
+      </li>
+    </ul>
+  </div>
+    </section>
+
+    <!-- Overview -->
+    <section>
+      <h2 class="h2">Overview</h2>
+      <!-- <p class="desc">放一张 Overview 大图（assets/overview.png）</p>  -->
+      <div class="frame">
+        <img src="assets/pipeline.png" alt="Overview" />
+      </div>
+    </section>
+
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+      <img id="lightbox-img" src="" alt="Fullscreen">
+    </div>
+    <section>
+      <h2 class="h2">RynnWorld-4D</h2>
+
+      <div class="panel soft" style="padding: 12px 14px 18px;">
+        <div class="video-grid">
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/flowworld/1/merged.mp4" controls playsinline preload="metadata"></video></div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/flowworld/2/merged.mp4" controls playsinline preload="metadata"></video></div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/flowworld/3/merged.mp4" controls playsinline preload="metadata"></video></div>
+          </div>
+
+          <!-- <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/flowworld/4/merged.mp4" controls playsinline preload="metadata"></video></div>
+          </div> -->
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/flowworld/6/merged.mp4" controls playsinline preload="metadata"></video></div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/flowworld/7/merged.mp4" controls playsinline preload="metadata"></video></div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/flowworld/8/merged.mp4" controls playsinline preload="metadata"></video></div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/flowworld/9/merged.mp4" controls playsinline preload="metadata"></video></div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/flowworld/10/merged.mp4" controls playsinline preload="metadata"></video></div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/flowworld/11/merged.mp4" controls playsinline preload="metadata"></video></div>
+          </div>
+
+          <!-- <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/flowworld/12/merged.mp4" controls playsinline preload="metadata"></video></div>
+          </div> -->
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/flowworld/13/merged.mp4" controls playsinline preload="metadata"></video></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Demos：三卡滑动（按钮翻页），支持很多个 -->
+    <section>
+      <h2 class="h2">Real-world experiments</h2>
+       <p class="desc">Click on the video to view a larger version.</p> 
+
+      <div class="panel soft" style="padding: 12px 14px 18px;">
+        <div class="video-grid">
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/real/1.mp4" controls playsinline></video></div>
+            <div class="demo-title">Dual Picking</div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/real/2.mp4" controls playsinline></video></div>
+            <div class="demo-title">Dual Picking</div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/real/3.mp4" controls playsinline></video></div>
+            <div class="demo-title">Block Pushing</div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/real/5.mp4" controls playsinline></video></div>
+            <div class="demo-title">Hand-over</div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/real/6.mp4" controls playsinline></video></div>
+            <div class="demo-title">Bimanual Lifting</div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/real/7.mp4" controls playsinline></video></div>
+            <div class="demo-title">Bimanual Lifting</div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/real/8.mp4" controls playsinline></video></div>
+            <div class="demo-title">Lid Placement</div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/real/9.mp4" controls playsinline></video></div>
+            <div class="demo-title">Lid Placement</div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/real/10.mp4" controls playsinline></video></div>
+            <div class="demo-title">Bowl Stacking</div>
+          </div>
+
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/real/11.mp4" controls playsinline></video></div>
+            <div class="demo-title">Bowl Stacking</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- BibTeX -->
+    <section>
+      <h2 class="h2">BibTeX</h2>
+      <div class="panel bib-wrap">
+        <div class="bib-head">
+          <button class="copy-btn" id="copyBib" type="button">
+            <i class="fa-regular fa-copy"></i> Copy
+          </button>
+          <span id="copyHint" style="color:var(--muted); font-weight:750;"></span>
+        </div>
+
+
+       <pre id="bibtexBlock"><code>@article{RynnWorld-4D2026,
+  title   = {RynnWorld-4D: 4D Embodied World Models for Robotic Manipulation},
+  author  = {Haoyu Zhao and Xingyue Zhao and Siteng Huang and Xin Li and Deli Zhao and Zhongyu Li},
+  year    = {2026}
+}</code></pre>
+      </div>
+    </section>
+
+    <div class="footer">
+      © <span id="year"></span> RynnWorld-4D Team, DAMO Academy, Alibaba Group
+    </div>
+  </main>
+
+  <script>
+    /* 视频切换逻辑 */
+    const srcZh = "https://github.com/alibaba-damo-academy/RynnWorld-4D.github.io/raw/refs/heads/main/assets/poster_video_zh.mp4";     // 中文版路径
+    const srcEn = "https://github.com/alibaba-damo-academy/RynnWorld-4D.github.io/raw/refs/heads/main/assets/poster_video_en.mp4";  // 英文版路径
+
+    function switchVideo(lang) {
+      const vid = document.getElementById('mainVideo');
+      const btns = document.querySelectorAll('.l-btn');
+
+      // 重置所有按钮样式
+      btns.forEach(btn => btn.classList.remove('active'));
+
+      if (lang === 'en') {
+        btns[0].classList.add('active'); // 第一个是 English
+        if(vid.getAttribute('src') !== srcEn){
+          vid.src = srcEn;
+          vid.play();
+        }
+      } else {
+        btns[1].classList.add('active'); // 第二个是中文
+        if(vid.getAttribute('src') !== srcZh){
+          vid.src = srcZh;
+          vid.play();
+        }
+      }
+    }
+    /* =========================
+       1. 图片灯箱 (Lightbox) 逻辑
+    ========================= */
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    function openLightbox(imgElement) {
+      if(lightbox && lightboxImg) {
+        lightboxImg.src = imgElement.src;
+        lightbox.classList.add('active');
+      }
+    }
+
+    function closeLightbox() {
+      if(lightbox) lightbox.classList.remove('active');
+    }
+    
+    if(lightbox) {
+      // 点击背景关闭
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+      // 按 ESC 关闭
+      document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape") closeLightbox();
+      });
+    }
+
+    /* =========================
+       2. 主题切换逻辑
+    ========================= */
+    const THEME_KEY = "theme";
+    const htmlEl = document.documentElement;
+    const themeHint = document.getElementById("themeHint");
+    const themeBtn = document.getElementById("toggleTheme");
+
+    function applyTheme(mode){
+      if(mode === "auto"){
+        htmlEl.removeAttribute("data-theme");
+        if(themeHint) themeHint.textContent = "Auto";
+      }else{
+        htmlEl.setAttribute("data-theme", mode);
+        if(themeHint) themeHint.textContent = mode === "dark" ? "Night" : "Light";
+      }
+    }
+
+    function getNextTheme(cur){
+      if(cur === "auto") return "dark";
+      if(cur === "dark") return "light";
+      return "auto";
+    }
+
+    // 初始化
+    const savedTheme = localStorage.getItem(THEME_KEY) || "auto";
+    applyTheme(savedTheme);
+
+    if(themeBtn){
+      themeBtn.addEventListener("click", () => {
+        const cur = localStorage.getItem(THEME_KEY) || "auto";
+        const next = getNextTheme(cur);
+        localStorage.setItem(THEME_KEY, next);
+        applyTheme(next);
+      });
+    }
+
+    /* =========================
+       3. 背景视频 Fallback
+    ========================= */
+    const bgv = document.getElementById("bg-video");
+    const fallback = document.querySelector(".bg-fallback");
+    const showFallback = () => {
+      if(fallback) fallback.style.display = "block";
+      if (bgv) bgv.style.display = "none";
+    };
+    if (bgv){
+      bgv.addEventListener("error", showFallback);
+      // 如果1.2秒还没准备好，就显示图片
+      setTimeout(() => { if (bgv.readyState === 0) showFallback(); }, 1200);
+    } else {
+      if(fallback) fallback.style.display = "block";
+    }
+
+    /* =========================
+       4. BibTeX 复制功能
+    ========================= */
+    const yearSpan = document.getElementById("year");
+    if(yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+    const copyBtn = document.getElementById("copyBib");
+    const bibBlock = document.getElementById("bibtexBlock");
+    const copyHint = document.getElementById("copyHint");
+
+    if(copyBtn && bibBlock){
+      copyBtn.addEventListener("click", async () => {
+        const text = bibBlock.innerText.trim();
+        try{
+          await navigator.clipboard.writeText(text);
+          if(copyHint) copyHint.textContent = "Copied!";
+          setTimeout(() => { if(copyHint) copyHint.textContent=""; }, 1500);
+        }catch(e){
+          console.error("Copy failed", e);
+        }
+      });
+    }
+
+    /* =========================
+       5. 核心修复：通用轮播图控制器
+       修复原理：滚动的是 Viewport (父元素)，而不是 Track (子元素)
+    ========================= */
+    function initCarousel(trackId, prevBtnId, nextBtnId, dotsId) {
+      const track = document.getElementById(trackId);
+      const prevBtn = document.getElementById(prevBtnId);
+      const nextBtn = document.getElementById(nextBtnId);
+      const dotsContainer = document.getElementById(dotsId);
+
+      if (!track || !prevBtn || !nextBtn) return;
+
+      // ✅ 关键修复：获取父级容器 (viewport)，因为 overflow: hidden 在它身上
+      const viewport = track.parentElement; 
+
+      // 计算单次滚动距离
+      const getScrollAmount = () => {
+        const cards = Array.from(track.children);
+        if(cards.length === 0) return 0;
+        
+        const cardWidth = cards[0].offsetWidth;
+        // 获取 gap (默认 18px，你的CSS里写的是18)
+        const style = window.getComputedStyle(track);
+        const gap = parseFloat(style.gap) || 18;
+        return cardWidth + gap;
+      };
+
+      // 按钮事件：控制 Viewport 滚动
+      prevBtn.addEventListener('click', () => {
+        const amount = getScrollAmount();
+        viewport.scrollBy({ left: -amount, behavior: 'smooth' });
+      });
+
+      nextBtn.addEventListener('click', () => {
+        const amount = getScrollAmount();
+        viewport.scrollBy({ left: amount, behavior: 'smooth' });
+      });
+
+      // Dots 逻辑
+      if (dotsContainer) {
+        const cards = Array.from(track.children);
+        // 清空旧点
+        dotsContainer.innerHTML = '';
+        
+        cards.forEach((_, index) => {
+          // 只为每页创建一个点（如果是双列，点可能会多，这里简化为每张卡一个点，或者你可以除以2）
+          // 你的CSS里 .dot 是 div
+          const dot = document.createElement('div');
+          dot.className = 'dot';
+          if (index === 0) dot.classList.add('active');
+          
+          dot.addEventListener('click', () => {
+            const amount = getScrollAmount();
+            viewport.scrollTo({ left: amount * index, behavior: 'smooth' });
+          });
+          
+          dotsContainer.appendChild(dot);
+        });
+
+        // 监听 Viewport 的滚动来更新点
+        viewport.addEventListener('scroll', () => {
+          const amount = getScrollAmount();
+          if(amount === 0) return;
+          
+          const scrollPos = viewport.scrollLeft;
+          const index = Math.round(scrollPos / amount);
+          
+          const dots = dotsContainer.querySelectorAll('.dot');
+          dots.forEach((d, i) => {
+            if (i === index) d.classList.add('active');
+            else d.classList.remove('active');
+          });
+        });
+      }
+    }
+
+    /* =========================
+       6. 启动轮播图
+    ========================= */
+    // 启动第一个 (Result 下面的 Demos)
+    // Real-world experiments 已改为静态两列网格，无需 initCarousel
+
+    // 启动第二个 (Navigation Demos - 双列)
+    // RynnWorld-4D 已改为静态两列网格，无需 initCarousel
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0b0b0f" />
-  <meta name="description" content="RynnWorld-4D Website" />
-  <title>RynnWorld-4D</title>
-  <link rel="icon" href="assets/head.png" type="image/png" />
+  <meta name="description" content="RynnWorld-Latent: A Cross-Embodiment World Model Conditioned on Universal Latent Actions" />
+  <title>RynnWorld-Latent</title>
+  <link rel="icon" href="assets/damo-logo-1.png" type="image/png" />
   <!-- 图标库（按钮图标用） -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
@@ -964,6 +964,18 @@ html[data-theme="light"]{
       .car-btn.left{ left: -6px; }
       .car-btn.right{ right: -6px; }
     }
+  
+    :root{--accent:#4f46e5}
+    html[data-theme="dark"]{--accent:#a78bfa}
+    .rt{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0}
+    .rt td,.rt th{border:1px solid var(--border);padding:6px 9px;text-align:center}
+    .rt th{background:var(--panel)}
+    .rt .best{font-weight:800;color:var(--accent)}
+    .tblwrap{padding:6px 18px 18px;overflow-x:auto}
+    .video-grid.three{grid-template-columns:repeat(3,1fr)}
+    .video-grid.one{grid-template-columns:1fr}
+    @media(max-width:980px){.video-grid.three{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:768px){.video-grid.three,.video-grid.one{grid-template-columns:1fr}}
   </style>
 </head>
 
@@ -980,11 +992,11 @@ html[data-theme="light"]{
   <!-- 左上角：学校+公司logo -->
   <div class="corner-logos" aria-label="Affiliation logos">
 
-    <img class="logo-light" src="assets/damo-logo-1.png" alt="School Logo Light">
+    <img class="logo-light" src="assets/damo-logo-1.png" alt="DAMO Academy">
     
-    <img class="logo-dark" src="assets/damo-logo-2.png" alt="School Logo Dark">
-    <img src="assets/logo-school.png" alt="Company Logo">
-    <img src="assets/logo-lab.jpg" alt="Company Logo">
+    <img class="logo-dark" src="assets/damo-logo-2.png" alt="DAMO Academy (dark)">
+    <img src="assets/logo-school.png" alt="CUHK">
+    <img src="assets/logo-lab.jpg" alt="Hong Kong Embodied AI Lab">
   </div>
 
   <!-- 右上角：主题切换（默认随系统） -->
@@ -1002,38 +1014,35 @@ html[data-theme="light"]{
       <div class="title-row">
         <!-- 项目logo（在标题左边） -->
         <!-- <img class="project-logo" src="assets/logo.png" alt="Project Logo"> -->
-        <h1 class="title">RynnWorld-4D</h1>
-        <h2 class="title">4D Embodied World Models for Robotic Manipulation</h2>
+        <h1 class="title">RynnWorld-Latent</h1>
+        <h2 class="title">A Cross-Embodiment World Model Conditioned on Universal Latent Actions</h2>
       </div>
 
-      <div class="authors">
+            <div class="authors">
         <span class="a"><a href="https://maxwell-zhao.github.io/" target="_blank" rel="noopener">Haoyu Zhao<sup>*</sup></a></span>
-        <span class="a">Xingyue Zhao<sup>*</sup></span>
-        <span class="a">Siteng Huang<sup>‡</sup></span>
-        <span class="a">Xin Li<sup></sup></span>
-        <span class="a">Deli Zhao<sup>‡</sup></span>
-        <span class="a">Zhongyu Li<sup>‡</sup></span>
-
-        
+        <span class="a">Yinzhou Tang<sup>*</sup></span>
+        <span class="a">Zixuan Wang<sup>*</sup></span>
+        <span class="a">Minghao Zhu</span>
+        <span class="a">Dongchi Huang</span>
+        <span class="a">Xingyue Zhao</span>
+        <span class="a">Qin Zhao</span>
+        <span class="a">Kehan Li</span>
+        <span class="a">Siteng Huang<sup>&dagger;</sup></span>
+        <span class="a">Xin Li</span>
+        <span class="a">Zhongyu Li<sup>&dagger;</sup></span>
       </div>
       
-      <div class="aff" style="font-size: 15px; margin-top: 10px; color: var(--muted);">
-        <span style="display:inline-block; margin: 0 10px;">
-          <sup>*</sup> Core contributors
-        </span>
-        <span style="display:inline-block; margin: 0 10px;">
-          <sup>‡</sup> Correspondence
-        </span>
+            <div class="aff" style="font-size: 15px; margin-top: 10px; color: var(--muted);">
+        DAMO Academy, Alibaba Group &middot; Hong Kong Embodied AI Lab &middot; CUHK &middot; Hupan Lab<br/>
+        <span style="display:inline-block; margin: 0 10px;"><sup>*</sup> Core contributors</span>
+        <span style="display:inline-block; margin: 0 10px;"><sup>&dagger;</sup> Corresponding authors</span>
       </div>
 
       <!-- 图标按钮 -->
-      <div class="pill-row">
-        <a class="pill" href="https://github.com/alibaba-damo-academy/RynnWorld-4D" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
-        <a class="pill" href="https://arxiv.org/pdf/2607.06559" target="_blank" rel="noopener"><i class="fa-regular fa-file-lines"></i> Paper </a>
-        <!-- <a class="pill" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-book-open"></i> ArXiv(Soon)</a> -->
-        <a class="pill" href="https://huggingface.co/Alibaba-DAMO-Academy/RynnWorld-4D" target="_blank" rel="noopener"><i class="fa-solid fa-face-smile"></i> Huggingface</a>
-        <a class="pill" href="https://www.modelscope.cn/models/DAMO_Academy/RynnWorld-4D" target="_blank" rel="noopener"><i class="fa-regular fa-file-lines"></i>modelscope</a>
-        <a class="pill" href="https://www.youtube.com/watch?v=mKw_r_fsrRg&feature=youtu.be" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i> YouTube</a>
+            <div class="pill-row">
+        <a class="pill" href="https://github.com/alibaba-damo-academy/RynnWorld-Latent" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a class="pill" href="https://huggingface.co/Alibaba-DAMO-Academy/RynnWorld-Latent" target="_blank" rel="noopener"><i class="fa-solid fa-face-smile"></i> Hugging Face</a>
+        <a class="pill" href="https://www.modelscope.cn/models/DAMO_Academy/RynnWorld-Latent" target="_blank" rel="noopener"><i class="fa-solid fa-cube"></i> ModelScope</a>
       </div>
 
       <!-- 宣传视频  -->
@@ -1048,11 +1057,11 @@ html[data-theme="light"]{
 
         <div class="promo-wrap"> 
           <div class="promo-inner">
-            <video 
-              id="mainVideo" 
-              src="assets/RynnWorld-4D.mp4" 
-              poster="assets/RynnWorld-4D-poster.jpg" 
-              controls 
+                        <video
+              id="mainVideo"
+              src="assets/viz/ac5.mp4"
+              poster="assets/viz/ac5.jpg"
+              controls
               playsinline>
             </video>
           </div>
@@ -1067,155 +1076,138 @@ html[data-theme="light"]{
     <!-- Abstract -->
     <section>
       <h2 class="h2">Abstract</h2>
-      <div class="panel abstract">
+            <div class="panel abstract">
     <p>
-      We present <strong>RynnWorld-4D</strong>, a novel 4D embodied world model that shifts the paradigm from 2D pixel prediction to physically grounded 4D scene evolution. By co-generating synchronized RGB, depth, and optical flow (RGB-DF), RynnWorld-4D captures the underlying 3D geometry and temporal motion trajectories, creating a representation space that effectively bridges the gap between generative world modeling and low-level robotic control. We release RynnWorld-4D as a unified diffusion framework featuring a specialized tri-branch architecture, alongside RynnWorld-4D‑Policy (an inverse dynamics head for high-frequency, closed-loop bimanual manipulation).
+      We present <strong>RynnWorld-Latent</strong>, a cross-embodiment video world model designed not only for future prediction but also for scalable robot data generation. RynnWorld-Latent addresses the action-label bottleneck by using continuous latent actions as a unified representation of world-state transitions, so human egocentric videos and robot data can be jointly modeled without embodiment-specific control commands. Built on a pretrained video diffusion transformer, it is text-free and introduces explicit frame-aligned action conditioning, enabling precise control over future dynamics while preserving the pretrained video prior. Beyond prediction, it serves as a data-generation engine: conditioned on target robot actions it supports interactive digital teleoperation; conditioned on latent actions it synthesizes new rollouts by editing a source video's first frame and reusing its latent actions.
     </p>
-
-    <h3 style="text-align: left; margin: 24px 0 12px; font-size: 20px; display: flex; align-items: center; gap: 8px;">
-      🌟 Key Highlights
-    </h3>
-    
+    <h3 style="text-align: left; margin: 24px 0 12px; font-size: 20px; display: flex; align-items: center; gap: 8px;">Key Highlights</h3>
     <ul style="text-align: left; padding-left: 20px; line-height: 1.6;">
-      <li style="margin-bottom: 10px;">
-        <strong>Projective 4D Representation:</strong><br>
-        Integrates RGB, Depth, and Optical Flow into a unified RGB-DF format, allowing pixels to be unprojected into metric 3D scene flow for precise geometric and kinetic grounding.
-      </li>
-      <li style="margin-bottom: 10px;">
-        <strong>Tri-branch Diffusion Architecture:</strong><br>
-        Employs three dedicated transformer branches with mutual cross-modal attention, ensuring that appearance, geometry, and motion evolve with high spatio-temporal consistency.
-      </li>
-      <li style="margin-bottom: 10px;">
-        <strong>Action-from-Latent Policy:</strong><br>
-        RynnWorld-4D-Policy bypasses expensive multi-step denoising by directly consuming internal 4D latents, enabling high-frequency (9Hz+), closed-loop dexterous control.
-      </li>
+      <li style="margin-bottom: 10px;"><strong>Universal latent-action interface:</strong><br>One embodiment-agnostic action space lets human, robot and simulation video pretrain a single world model.</li>
+      <li style="margin-bottom: 10px;"><strong>Prior-preserving frame-aligned conditioning:</strong><br>Identity-initialized, frame-aligned injection gives precise action control without overwriting the pretrained video prior.</li>
+      <li style="margin-bottom: 10px;"><strong>World model as data engine:</strong><br>Interactive digital teleoperation and first-frame-editing + latent-action synthesis produce paired action-video data without physical execution.</li>
     </ul>
   </div>
     </section>
 
-    <!-- Overview -->
+
+
+    <!-- Training Data -->
     <section>
-      <h2 class="h2">Overview</h2>
-      <!-- <p class="desc">放一张 Overview 大图（assets/overview.png）</p>  -->
+      <h2 class="h2">Training Data</h2>
+      <p class="desc">Pre-training corpus of RynnWorld-Latent. Human egocentric video, real-robot teleoperation and simulation rollouts are all relabelled by RynnLAM into one shared latent-action space, giving a single cross-embodiment conditioning signal. Click the figure to enlarge.</p>
       <div class="frame">
-        <img src="assets/pipeline.png" alt="Overview" />
+        <img src="assets/datasets.png" alt="RynnWorld pretraining corpus" onclick="openLightbox(this)" style="cursor:zoom-in" />
       </div>
     </section>
+
 
 
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
       <img id="lightbox-img" src="" alt="Fullscreen">
     </div>
     <section>
-      <h2 class="h2">RynnWorld-4D</h2>
-
+      <h2 class="h2">Action-Conditioned Video Generation</h2>
+      <p class="desc">Given an initial frame and a supplied action sequence, RynnWorld-Latent generates the future rollout. Three embodiments &times; three rollouts.</p>
       <div class="panel soft" style="padding: 12px 14px 18px;">
-        <div class="video-grid">
+        <div class="h3-row">GR-1</div>
+        <div class="video-grid three">
           <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/flowworld/1/merged.mp4" controls playsinline preload="metadata"></video></div>
+            <div class="frame"><video class="video" src="assets/viz/gr1g0.mp4" poster="assets/viz/gr1g0.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">GR-1 &mdash; generated</div>
           </div>
-
           <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/flowworld/2/merged.mp4" controls playsinline preload="metadata"></video></div>
+            <div class="frame"><video class="video" src="assets/viz/gr1g1.mp4" poster="assets/viz/gr1g1.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">GR-1 &mdash; generated</div>
           </div>
-
           <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/flowworld/3/merged.mp4" controls playsinline preload="metadata"></video></div>
+            <div class="frame"><video class="video" src="assets/viz/gr1g2.mp4" poster="assets/viz/gr1g2.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">GR-1 &mdash; generated</div>
           </div>
-
-          <!-- <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/flowworld/4/merged.mp4" controls playsinline preload="metadata"></video></div>
-          </div> -->
-
+        </div>
+        <div class="h3-row">Marvin-WUJI</div>
+        <div class="video-grid three">
           <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/flowworld/6/merged.mp4" controls playsinline preload="metadata"></video></div>
+            <div class="frame"><video class="video" src="assets/viz/ac1.mp4" poster="assets/viz/ac1.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">Marvin-WUJI &mdash; generated</div>
           </div>
-
           <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/flowworld/7/merged.mp4" controls playsinline preload="metadata"></video></div>
+            <div class="frame"><video class="video" src="assets/viz/ac2.mp4" poster="assets/viz/ac2.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">Marvin-WUJI &mdash; generated</div>
           </div>
-
           <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/flowworld/8/merged.mp4" controls playsinline preload="metadata"></video></div>
+            <div class="frame"><video class="video" src="assets/viz/ac3.mp4" poster="assets/viz/ac3.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">Marvin-WUJI &mdash; generated</div>
           </div>
-
+        </div>
+        <div class="h3-row">Astribot-S1</div>
+        <div class="video-grid three">
           <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/flowworld/9/merged.mp4" controls playsinline preload="metadata"></video></div>
+            <div class="frame"><video class="video" src="assets/viz/xing1.mp4" poster="assets/viz/xing1.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">Astribot-S1 &mdash; generated</div>
           </div>
-
           <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/flowworld/10/merged.mp4" controls playsinline preload="metadata"></video></div>
+            <div class="frame"><video class="video" src="assets/viz/xing2.mp4" poster="assets/viz/xing2.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">Astribot-S1 &mdash; generated</div>
           </div>
-
           <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/flowworld/11/merged.mp4" controls playsinline preload="metadata"></video></div>
-          </div>
-
-          <!-- <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/flowworld/12/merged.mp4" controls playsinline preload="metadata"></video></div>
-          </div> -->
-
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/flowworld/13/merged.mp4" controls playsinline preload="metadata"></video></div>
+            <div class="frame"><video class="video" src="assets/viz/xing3.mp4" poster="assets/viz/xing3.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">Astribot-S1 &mdash; generated</div>
           </div>
         </div>
       </div>
     </section>
     <!-- Demos：三卡滑动（按钮翻页），支持很多个 -->
     <section>
-      <h2 class="h2">Real-world experiments</h2>
-       <p class="desc">Click on the video to view a larger version.</p> 
-
+      <h2 class="h2">Action Following</h2>
+      <p class="desc">Each strip is one pair: <b>GT-A | Gen(A frame + A action) | Gen(A frame + B action) | GT-B</b>. Both generations start from the SAME first frame (A's); only the action differs, so the third panel diverging from the second &mdash; and matching GT-B's motion &mdash; is direct evidence of action following.</p>
+      <div class="panel soft" style="padding: 12px 14px 18px;">
+        <div class="h3-row">GR-1</div>
+        <div class="video-grid one">
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/viz/afl_gr1_1.mp4" poster="assets/viz/afl_gr1_1.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">GR-1 pair 1 &mdash; GT-A | Gen(A+A) | Gen(A+B) | GT-B</div>
+          </div>
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/viz/afl_gr1_2.mp4" poster="assets/viz/afl_gr1_2.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">GR-1 pair 2 &mdash; GT-A | Gen(A+A) | Gen(A+B) | GT-B</div>
+          </div>
+        </div>
+        <div class="h3-row">Marvin-WUJI</div>
+        <div class="video-grid one">
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/viz/afl_rvvla_1.mp4" poster="assets/viz/afl_rvvla_1.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">Marvin-WUJI pair 1 &mdash; GT-A | Gen(A+A) | Gen(A+B) | GT-B</div>
+          </div>
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/viz/afl_rvvla_2.mp4" poster="assets/viz/afl_rvvla_2.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">Marvin-WUJI pair 2 &mdash; GT-A | Gen(A+A) | Gen(A+B) | GT-B</div>
+          </div>
+        </div>
+        <div class="h3-row">Astribot-S1</div>
+        <div class="video-grid one">
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/viz/afl_ast_1.mp4" poster="assets/viz/afl_ast_1.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">Astribot-S1 pair 1 &mdash; GT-A | Gen(A+A) | Gen(A+B) | GT-B</div>
+          </div>
+          <div class="video-grid-card">
+            <div class="frame"><video class="video" src="assets/viz/afl_ast_2.mp4" poster="assets/viz/afl_ast_2.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">Astribot-S1 pair 2 &mdash; GT-A | Gen(A+A) | Gen(A+B) | GT-B</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2 class="h2">First-Frame Editing + Latent-Action Synthesis</h2>
+      <p class="desc">Left: the source human-hand video. Right: the rollout generated after editing the first frame to the robot embodiment and reusing the source latent actions.</p>
       <div class="panel soft" style="padding: 12px 14px 18px;">
         <div class="video-grid">
           <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/real/1.mp4" controls playsinline></video></div>
-            <div class="demo-title">Dual Picking</div>
+            <div class="frame"><video class="video" src="assets/viz/deh3.mp4" poster="assets/viz/deh3.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">Human source | edited-first-frame robot rollout (pan washing)</div>
           </div>
-
           <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/real/2.mp4" controls playsinline></video></div>
-            <div class="demo-title">Dual Picking</div>
-          </div>
-
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/real/3.mp4" controls playsinline></video></div>
-            <div class="demo-title">Block Pushing</div>
-          </div>
-
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/real/5.mp4" controls playsinline></video></div>
-            <div class="demo-title">Hand-over</div>
-          </div>
-
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/real/6.mp4" controls playsinline></video></div>
-            <div class="demo-title">Bimanual Lifting</div>
-          </div>
-
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/real/7.mp4" controls playsinline></video></div>
-            <div class="demo-title">Bimanual Lifting</div>
-          </div>
-
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/real/8.mp4" controls playsinline></video></div>
-            <div class="demo-title">Lid Placement</div>
-          </div>
-
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/real/9.mp4" controls playsinline></video></div>
-            <div class="demo-title">Lid Placement</div>
-          </div>
-
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/real/10.mp4" controls playsinline></video></div>
-            <div class="demo-title">Bowl Stacking</div>
-          </div>
-
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/real/11.mp4" controls playsinline></video></div>
-            <div class="demo-title">Bowl Stacking</div>
+            <div class="frame"><video class="video" src="assets/viz/deh4.mp4" poster="assets/viz/deh4.jpg" controls playsinline preload="metadata"></video></div>
+            <div class="demo-title">Human source | edited-first-frame robot rollout (stir-fry)</div>
           </div>
         </div>
       </div>
@@ -1223,6 +1215,55 @@ html[data-theme="light"]{
 
 
     <!-- BibTeX -->
+    <!-- Results -->
+    <section>
+      <h2 class="h2">Results</h2>
+      <div class="panel soft">
+        <div style="padding: 18px 20px 8px;">
+          <p class="desc" style="margin:0 0 12px;">Open-loop simulation quality on <b>our own real-robot evaluation sets</b>, recorded as ground-truth rollouts on both platforms and held out from post-training (higher PSNR/SSIM and lower LPIPS are better).</p>
+          <div class="tblwrap">
+            <table class="rt">
+              <tr><th>Method</th><th colspan="3">Marvin-WUJI Eval</th><th colspan="3">Astribot-S1 Eval</th></tr>
+              <tr><th></th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr>
+              <tr><td>Cosmos3-Edge</td><td>20.03</td><td>0.78</td><td>0.31</td><td>13.99</td><td>0.42</td><td>0.54</td></tr>
+              <tr><td>Cosmos3-Nano</td><td>20.09</td><td class="best">0.80</td><td>0.26</td><td>14.22</td><td>0.53</td><td>0.45</td></tr>
+              <tr><td>RynnWorld-Teleop</td><td>20.89</td><td>0.76</td><td>0.19</td><td>N/A</td><td>N/A</td><td>N/A</td></tr>
+              <tr><td><b>RynnWorld-Latent</b></td><td class="best">21.86</td><td class="best">0.80</td><td class="best">0.12</td><td class="best">15.96</td><td class="best">0.60</td><td class="best">0.34</td></tr>
+            </table>
+          </div>
+          <p class="desc" style="margin:20px 0 12px;">Open-loop rollout quality on the DreamDojo GR-1 evaluation sets (higher PSNR/SSIM and lower LPIPS is better).</p>
+          <div class="tblwrap">
+            <table class="rt">
+              <tr><th>Model</th><th colspan="3">In-lab Eval</th><th colspan="3">EgoDex Eval</th><th colspan="3">DreamDojo-HV Eval</th></tr>
+              <tr><th></th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr>
+              <tr><td>Cosmos-Predict2.5</td><td>20.58</td><td>0.77</td><td>0.22</td><td>19.95</td><td>0.79</td><td>0.22</td><td>18.27</td><td>0.75</td><td>0.24</td></tr>
+              <tr><td>DreamDojo-2B</td><td>21.11</td><td>0.77</td><td>0.22</td><td>20.41</td><td>0.78</td><td>0.23</td><td>18.81</td><td>0.75</td><td>0.24</td></tr>
+              <tr><td>DreamDojo-14B</td><td>21.41</td><td>0.79</td><td>0.21</td><td>20.53</td><td>0.79</td><td>0.21</td><td>18.92</td><td>0.75</td><td>0.23</td></tr>
+              <tr><td><b>RynnWorld-Latent</b></td><td class="best">21.42</td><td class="best">0.82</td><td class="best">0.20</td><td class="best">20.89</td><td class="best">0.81</td><td class="best">0.19</td><td class="best">19.22</td><td class="best">0.79</td><td class="best">0.21</td></tr>
+            </table>
+          </div>
+          <p class="desc" style="margin:20px 0 12px;">Closed-loop success rate (%) on real-world manipulation tasks, 35 trials each. Bold marks the best within each training-setting block; N/A = not applicable to Astribot-S1 (mobile-base motion not modelled).</p>
+          <div class="tblwrap">
+            <table class="rt">
+              <tr><th>Method</th><th>Training Setting</th><th colspan="2">Marvin-WUJI</th><th colspan="2">Astribot-S1</th></tr>
+              <tr><th></th><th></th><th>Plate Placement</th><th>Plate Wiping</th><th>Steak Serving</th><th>Plate Retrieval</th></tr>
+              <tr><td colspan="6" style="text-align:left;font-style:italic">Digital teleoperation</td></tr>
+              <tr><td>&pi;<sub>0</sub></td><td>Real only</td><td>80.00</td><td>71.43</td><td>37.14</td><td>45.71</td></tr>
+              <tr><td>&pi;<sub>0</sub></td><td>Real + Digital Teleop</td><td>88.57</td><td class="best">94.29</td><td>51.43</td><td>51.43</td></tr>
+              <tr><td>&pi;<sub>0.5</sub></td><td>Real only</td><td>82.86</td><td>77.14</td><td>40.00</td><td>45.71</td></tr>
+              <tr><td>&pi;<sub>0.5</sub></td><td>Digital Teleop only</td><td>57.14</td><td>54.29</td><td>28.57</td><td>31.43</td></tr>
+              <tr><td>&pi;<sub>0.5</sub></td><td>Real + RynnWorld-Teleop</td><td>85.71</td><td>82.86</td><td>N/A</td><td>N/A</td></tr>
+              <tr><td>&pi;<sub>0.5</sub></td><td>Real + Digital Teleop</td><td class="best">91.43</td><td>91.43</td><td class="best">54.29</td><td class="best">57.14</td></tr>
+              <tr><td colspan="6" style="text-align:left;font-style:italic">Large-scale synthetic mid-training</td></tr>
+              <tr><td>&pi;<sub>0</sub></td><td>RynnWorld-80M + Real</td><td>85.71</td><td>82.86</td><td>48.57</td><td>54.29</td></tr>
+              <tr><td>&pi;<sub>0.5</sub></td><td>Real + Ego2Robot</td><td>88.57</td><td>91.43</td><td>N/A</td><td>N/A</td></tr>
+              <tr><td>&pi;<sub>0.5</sub></td><td>RynnWorld-80M + Real</td><td class="best">94.29</td><td class="best">97.14</td><td class="best">60.00</td><td class="best">68.57</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section>
       <h2 class="h2">BibTeX</h2>
       <div class="panel bib-wrap">
@@ -1234,23 +1275,23 @@ html[data-theme="light"]{
         </div>
 
 
-       <pre id="bibtexBlock"><code>@article{RynnWorld-4D2026,
-  title   = {RynnWorld-4D: 4D Embodied World Models for Robotic Manipulation},
-  author  = {Haoyu Zhao and Xingyue Zhao and Siteng Huang and Xin Li and Deli Zhao and Zhongyu Li},
+              <pre id="bibtexBlock"><code>@article{rynnworld2026latent,
+  title   = {RynnWorld-Latent: A Cross-Embodiment World Model Conditioned on Universal Latent Actions},
+  author  = {Haoyu Zhao and Yinzhou Tang and Zixuan Wang and Minghao Zhu and Dongchi Huang and Xingyue Zhao and Qin Zhao and Kehan Li and Siteng Huang and Xin Li and Zhongyu Li},
   year    = {2026}
 }</code></pre>
       </div>
     </section>
 
-    <div class="footer">
-      © <span id="year"></span> RynnWorld-4D Team, DAMO Academy, Alibaba Group
+        <div class="footer">
+      &copy; <span id="year"></span> RynnWorld-Latent Team, DAMO Academy, Alibaba Group
     </div>
   </main>
 
   <script>
     /* 视频切换逻辑 */
-    const srcZh = "https://github.com/alibaba-damo-academy/RynnWorld-4D.github.io/raw/refs/heads/main/assets/poster_video_zh.mp4";     // 中文版路径
-    const srcEn = "https://github.com/alibaba-damo-academy/RynnWorld-4D.github.io/raw/refs/heads/main/assets/poster_video_en.mp4";  // 英文版路径
+    const srcZh = "assets/viz/ac5.mp4";     // 中文版路径
+    const srcEn = "assets/viz/ac5.mp4";  // 英文版路径
 
     function switchVideo(lang) {
       const vid = document.getElementById('mainVideo');
@@ -1461,7 +1502,7 @@ html[data-theme="light"]{
     // Real-world experiments 已改为静态两列网格，无需 initCarousel
 
     // 启动第二个 (Navigation Demos - 双列)
-    // RynnWorld-4D 已改为静态两列网格，无需 initCarousel
+    // 已改为静态两列网格，无需 initCarousel
   </script>
 </body>
 </html>

@@ -977,19 +977,21 @@ html[data-theme="light"]{
     @media(max-width:980px){.video-grid.three{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:768px){.video-grid.three,.video-grid.one{grid-template-columns:1fr}}
   </style>
-</head>
+  <link rel="stylesheet" href="assets/gallery.css">
+  <link rel="stylesheet" href="assets/experiments.css">
+<style>
+.human-robot-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.human-robot-card{margin:0;padding:16px;border:1px solid var(--border,#dce2eb);border-radius:20px;background:var(--panel,transparent);overflow:hidden}.human-robot-card video{display:block;width:100%;height:330px;object-fit:contain;background:#10151d;border-radius:12px}.human-robot-card h3{font-size:21px;margin:16px 0 5px}.human-robot-card p{margin:0;font-size:15px;opacity:.75}@media(max-width:700px){.human-robot-grid{grid-template-columns:1fr}.human-robot-card video{height:auto;max-height:400px}}
+</style></head>
 
 <body>
   <!-- 背景 -->
   <div class="bg-layer">
-    <video id="bg-video" autoplay muted loop playsinline>
-      <source src="assets/bg.mp4" type="video/mp4">
-    </video>
     <div class="bg-fallback"></div>
   </div>
   <div class="vignette"></div>
 
   <!-- 左上角：学校+公司logo -->
+  <div class="site-topbar">
   <div class="corner-logos" aria-label="Affiliation logos">
 
     <img class="logo-light" src="assets/damo-logo-1.png" alt="DAMO Academy">
@@ -1008,6 +1010,7 @@ html[data-theme="light"]{
     <span class="theme-hint" id="themeHint">Auto</span>
   </div>
 
+  </div>
   <!-- Hero -->
   <header class="hero">
     <div class="container">
@@ -1059,8 +1062,9 @@ html[data-theme="light"]{
           <div class="promo-inner">
                         <video
               id="mainVideo"
-              src="assets/viz/ac5.mp4"
-              poster="assets/viz/ac5.jpg"
+              preload="metadata"
+              src="assets/RynnWorld-Latent-demo.mp4"
+              poster="assets/RynnWorld-Latent-demo.jpg"
               controls
               playsinline>
             </video>
@@ -1073,6 +1077,7 @@ html[data-theme="light"]{
   </header>
 
   <main class="container">
+    <nav class="experiment-nav section-jumps" aria-label="Page sections"><a href="#action-conditioned">Generated rollouts</a><a href="#action-following">Action following</a><a href="#synthesis">Human-to-robot synthesis</a><a href="#experiments">Experimental results ↓</a></nav>
     <!-- Abstract -->
     <section>
       <h2 class="h2">Abstract</h2>
@@ -1105,164 +1110,56 @@ html[data-theme="light"]{
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
       <img id="lightbox-img" src="" alt="Fullscreen">
     </div>
-    <section>
+    <section id="action-conditioned">
       <h2 class="h2">Action-Conditioned Video Generation</h2>
-      <p class="desc">Given an initial frame and a supplied action sequence, RynnWorld-Latent generates the future rollout. Three embodiments &times; three rollouts.</p>
-      <div class="panel soft" style="padding: 12px 14px 18px;">
-        <div class="h3-row">GR-1</div>
-        <div class="video-grid three">
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/gr1g0.mp4" poster="assets/viz/gr1g0.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">GR-1 &mdash; generated</div>
-          </div>
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/gr1g1.mp4" poster="assets/viz/gr1g1.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">GR-1 &mdash; generated</div>
-          </div>
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/gr1g2.mp4" poster="assets/viz/gr1g2.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">GR-1 &mdash; generated</div>
-          </div>
-        </div>
-        <div class="h3-row">Marvin-WUJI</div>
-        <div class="video-grid three">
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/ac1.mp4" poster="assets/viz/ac1.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">Marvin-WUJI &mdash; generated</div>
-          </div>
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/ac2.mp4" poster="assets/viz/ac2.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">Marvin-WUJI &mdash; generated</div>
-          </div>
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/ac3.mp4" poster="assets/viz/ac3.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">Marvin-WUJI &mdash; generated</div>
-          </div>
-        </div>
-        <div class="h3-row">Astribot-S1</div>
-        <div class="video-grid three">
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/xing1.mp4" poster="assets/viz/xing1.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">Astribot-S1 &mdash; generated</div>
-          </div>
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/xing2.mp4" poster="assets/viz/xing2.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">Astribot-S1 &mdash; generated</div>
-          </div>
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/xing3.mp4" poster="assets/viz/xing3.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">Astribot-S1 &mdash; generated</div>
-          </div>
-        </div>
-      </div>
+      <p class="gallery-intro">One initial observation and a supplied robot-action sequence define a rollout. Explore 25 selected examples across GR-1, Marvin-WUJI and Astribot-S1. Reference videos are shown alongside predictions where available.</p>
+      <div class="gallery-links"><a href="#action-following">See controlled action-following comparisons ↓</a><a href="#synthesis">Explore first-frame editing ↓</a></div>
+      <div id="generation-gallery"></div>
     </section>
-    <!-- Demos：三卡滑动（按钮翻页），支持很多个 -->
-    <section>
-      <h2 class="h2">Action Following</h2>
-      <p class="desc">Each strip is one pair: <b>GT-A | Gen(A frame + A action) | Gen(A frame + B action) | GT-B</b>. Both generations start from the SAME first frame (A's); only the action differs, so the third panel diverging from the second &mdash; and matching GT-B's motion &mdash; is direct evidence of action following.</p>
-      <div class="panel soft" style="padding: 12px 14px 18px;">
-        <div class="h3-row">GR-1</div>
-        <div class="video-grid one">
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/afl_gr1_1.mp4" poster="assets/viz/afl_gr1_1.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">GR-1 pair 1 &mdash; GT-A | Gen(A+A) | Gen(A+B) | GT-B</div>
-          </div>
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/afl_gr1_2.mp4" poster="assets/viz/afl_gr1_2.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">GR-1 pair 2 &mdash; GT-A | Gen(A+A) | Gen(A+B) | GT-B</div>
-          </div>
-        </div>
-        <div class="h3-row">Marvin-WUJI</div>
-        <div class="video-grid one">
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/afl_rvvla_1.mp4" poster="assets/viz/afl_rvvla_1.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">Marvin-WUJI pair 1 &mdash; GT-A | Gen(A+A) | Gen(A+B) | GT-B</div>
-          </div>
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/afl_rvvla_2.mp4" poster="assets/viz/afl_rvvla_2.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">Marvin-WUJI pair 2 &mdash; GT-A | Gen(A+A) | Gen(A+B) | GT-B</div>
-          </div>
-        </div>
-        <div class="h3-row">Astribot-S1</div>
-        <div class="video-grid one">
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/afl_ast_1.mp4" poster="assets/viz/afl_ast_1.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">Astribot-S1 pair 1 &mdash; GT-A | Gen(A+A) | Gen(A+B) | GT-B</div>
-          </div>
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/afl_ast_2.mp4" poster="assets/viz/afl_ast_2.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">Astribot-S1 pair 2 &mdash; GT-A | Gen(A+A) | Gen(A+B) | GT-B</div>
-          </div>
-        </div>
-      </div>
+    <section id="action-following">
+      <h2 class="h2">Same Initial Image. Different Actions.</h2>
+      <p class="gallery-intro">Hold the visual starting point fixed. Change the supplied action sequence. The two generated rollouts reveal how motion responds to action A versus action B.</p>
+      <div class="protocol-note"><strong>How to read these comparisons.</strong> Both predictions use the same initial image from sequence A. The left prediction receives actions A; the right receives actions B. Compare their motion, then open the recorded references to see the source of each action sequence. Task names describe the recorded sources; they are not text prompts to the world model.</div>
+      <div id="following-gallery"></div>
     </section>
     <section>
-      <h2 class="h2">First-Frame Editing + Latent-Action Synthesis</h2>
-      <p class="desc">Left: the source human-hand video. Right: the rollout generated after editing the first frame to the robot embodiment and reusing the source latent actions.</p>
-      <div class="panel soft" style="padding: 12px 14px 18px;">
-        <div class="video-grid">
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/deh3.mp4" poster="assets/viz/deh3.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">Human source | edited-first-frame robot rollout (pan washing)</div>
-          </div>
-          <div class="video-grid-card">
-            <div class="frame"><video class="video" src="assets/viz/deh4.mp4" poster="assets/viz/deh4.jpg" controls playsinline preload="metadata"></video></div>
-            <div class="demo-title">Human source | edited-first-frame robot rollout (stir-fry)</div>
-          </div>
-        </div>
+      <h2 class="h2" id="synthesis">First-Frame Editing + Latent-Action Synthesis</h2>
+      <p class="desc">Edit the initial frame to the robot embodiment, then condition generation on the source latent actions. These four robotized rollouts show the generated output; source-human videos are not shown.</p>
+      <div class="human-robot-grid">
+        <article class="human-robot-card"><video src="assets/human-robot/pan-washing.mp4" poster="assets/human-robot/pan-washing.jpg" controls playsinline preload="none"></video><h3>Pan washing</h3><p>Generated robotized rollout</p></article>
+        <article class="human-robot-card"><video src="assets/human-robot/cooking.mp4" poster="assets/human-robot/cooking.jpg" controls playsinline preload="none"></video><h3>Cooking</h3><p>Generated robotized rollout</p></article>
+        <article class="human-robot-card"><video src="assets/human-robot/desk-interaction.mp4" poster="assets/human-robot/desk-interaction.jpg" controls playsinline preload="none"></video><h3>Desk interaction</h3><p>Generated robotized rollout</p></article>
+        <article class="human-robot-card"><video src="assets/human-robot/cup-interaction.mp4" poster="assets/human-robot/cup-interaction.jpg" controls playsinline preload="none"></video><h3>Cup interaction</h3><p>Generated robotized rollout</p></article>
       </div>
     </section>
 
 
     <!-- BibTeX -->
-    <!-- Results -->
-    <section>
-      <h2 class="h2">Results</h2>
-      <div class="panel soft">
-        <div style="padding: 18px 20px 8px;">
-          <p class="desc" style="margin:0 0 12px;">Open-loop simulation quality on <b>our own real-robot evaluation sets</b>, recorded as ground-truth rollouts on both platforms and held out from post-training (higher PSNR/SSIM and lower LPIPS are better).</p>
-          <div class="tblwrap">
-            <table class="rt">
+<section id="experiments" class="experiment-section">
+ <div class="experiment-heading"><span class="experiment-eyebrow">EXPERIMENTAL RESULTS</span><h2 class="h2">From generated data to policy performance</h2><p class="gallery-intro">Evaluate the data engine through real-robot policy success, simulation benchmarks, and video prediction quality.</p></div>
+ <nav class="experiment-nav" aria-label="Experiment results"><a href="#digital-teleop-results">Digital teleoperation</a><a href="#synthetic-results">Large-scale synthesis</a><a href="#simulation-results">Simulation benchmarks</a><a href="#prediction-results">Video prediction</a></nav>
+ <div class="experiment-metrics"><a class="experiment-metric" href="#digital-teleop-results"><span class="experiment-eyebrow">Digital teleoperation</span><strong class="metric-number">+22.86 pp</strong><h3>Plate wiping · Marvin-WUJI</h3><p>Policy: π₀ · success rate (%)</p><div class="metric-bar-row"><span>Real only</span><b>71.43</b><div class="metric-track"><span style="width:71.43%"></span></div></div><div class="metric-bar-row improved"><span>Real + Digital Teleop</span><b>94.29</b><div class="metric-track"><span style="width:94.29%"></span></div></div></a><a class="experiment-metric" href="#simulation-results"><span class="experiment-eyebrow">Synthetic mid-training</span><strong class="metric-number">+25.8 pp</strong><h3>LIBERO-Plus</h3><p>Policy: π₀ · success rate (%)</p><div class="metric-bar-row"><span>Base policy</span><b>53.6</b><div class="metric-track"><span style="width:53.6%"></span></div></div><div class="metric-bar-row improved"><span>+ RynnWorld-80M</span><b>79.4</b><div class="metric-track"><span style="width:79.4%"></span></div></div></a><a class="experiment-metric" href="#synthetic-results"><span class="experiment-eyebrow">Synthesis + real data</span><strong class="metric-number">+22.86 pp</strong><h3>Plate retrieval · Astribot-S1</h3><p>Policy: π₀.₅ · success rate (%)</p><div class="metric-bar-row"><span>Real only</span><b>45.71</b><div class="metric-track"><span style="width:45.71%"></span></div></div><div class="metric-bar-row improved"><span>RynnWorld-80M + Real</span><b>68.57</b><div class="metric-track"><span style="width:68.57%"></span></div></div></a></div><p class="experiment-footnote">Selected within-policy comparisons; pp = percentage points. Full settings and baselines are reported below.</p>
+ <article class="experiment-panel" id="digital-teleop-results"><span class="experiment-eyebrow">ROUTE 1 · DIGITAL TELEOPERATION</span><h3>Do generated teleoperation episodes improve real-world policies?</h3><p>An operator supplies robot commands and the world model generates observations. Adding these paired episodes improves observed success rates on all four tasks for both policy backbones.</p><div class="experiment-table-scroll" tabindex="0" role="region" aria-label="Digital-teleoperation data · real-robot success rates (%)"><table class="experiment-table"><caption>Digital-teleoperation data · real-robot success rates (%)</caption><thead><tr><th colspan="2" scope="colgroup">Policy & training</th><th colspan="2" scope="colgroup">Marvin-WUJI</th><th colspan="2" scope="colgroup">Astribot-S1</th></tr><tr><th scope="col">Policy</th><th scope="col">Training data</th><th scope="col">Plate placement</th><th scope="col">Plate wiping</th><th scope="col">Steak serving</th><th scope="col">Plate retrieval</th></tr></thead><tbody><tr><th scope="row">π₀</th><td>Real only</td><td>80.00</td><td>71.43</td><td>37.14</td><td>45.71</td></tr><tr class="ours-row"><th scope="row">π₀</th><td>Real + Digital Teleop</td><td>88.57</td><td>94.29</td><td>51.43</td><td>51.43</td></tr><tr><th scope="row">π₀.₅</th><td>Real only</td><td>82.86</td><td>77.14</td><td>40.00</td><td>45.71</td></tr><tr><th scope="row">π₀.₅</th><td>Digital Teleop only</td><td>57.14</td><td>54.29</td><td>28.57</td><td>31.43</td></tr><tr><th scope="row">π₀.₅</th><td>Real + RynnWorld-Teleop</td><td>85.71</td><td>82.86</td><td>N/A</td><td>N/A</td></tr><tr class="ours-row"><th scope="row">π₀.₅</th><td>Real + Digital Teleop</td><td>91.43</td><td>91.43</td><td>54.29</td><td>57.14</td></tr></tbody></table></div><p class="experiment-footnote">35 closed-loop real-robot trials per task and setting. The synthetic-only setting is below Real only on all four tasks. N/A: the baseline implementation does not support Astribot-S1 mobile-base motion.</p></article>
+ <article class="experiment-panel" id="synthetic-results"><span class="experiment-eyebrow">ROUTE 2 · LATENT-ACTION SYNTHESIS</span><h3>Does synthetic mid-training transfer to real robots?</h3><p>Mid-train on robotized videos with retargeted pseudo-actions, then post-train on real demonstrations. For π₀.₅, steak serving rises from 40.00% to 60.00%, and plate retrieval from 45.71% to 68.57%.</p><div class="experiment-table-scroll" tabindex="0" role="region" aria-label="Synthetic mid-training · real-robot success rates (%)"><table class="experiment-table"><caption>Synthetic mid-training · real-robot success rates (%)</caption><thead><tr><th colspan="2" scope="colgroup">Policy & training</th><th colspan="2" scope="colgroup">Marvin-WUJI</th><th colspan="2" scope="colgroup">Astribot-S1</th></tr><tr><th scope="col">Policy</th><th scope="col">Training data</th><th scope="col">Plate placement</th><th scope="col">Plate wiping</th><th scope="col">Steak serving</th><th scope="col">Plate retrieval</th></tr></thead><tbody><tr><th scope="row">π₀</th><td>Real only</td><td>80.00</td><td>71.43</td><td>37.14</td><td>45.71</td></tr><tr class="ours-row"><th scope="row">π₀</th><td>RynnWorld-80M + Real</td><td>85.71</td><td>82.86</td><td>48.57</td><td>54.29</td></tr><tr><th scope="row">π₀.₅</th><td>Real only</td><td>82.86</td><td>77.14</td><td>40.00</td><td>45.71</td></tr><tr><th scope="row">π₀.₅</th><td>Real + Ego2Robot</td><td>88.57</td><td>91.43</td><td>N/A</td><td>N/A</td></tr><tr class="ours-row"><th scope="row">π₀.₅</th><td>RynnWorld-80M + Real</td><td>94.29</td><td>97.14</td><td>60.00</td><td>68.57</td></tr></tbody></table></div><p class="experiment-footnote">The Real only rows are the shared references for both routes. Each setting uses 35 real-robot trials per task; these are observed improvements, without a claim of statistical significance.</p></article>
+ <article class="experiment-panel" id="simulation-results"><span class="experiment-eyebrow">SIMULATION POLICY BENCHMARKS</span><h3>How does synthetic data affect manipulation and robustness?</h3><p>Continue pretraining on RynnWorld-80M before downstream evaluation. Gains are larger for π₀: LIBERO-Plus improves from 53.6% to 79.4%.</p><div class="experiment-table-scroll" tabindex="0" role="region" aria-label="Simulation policy success rates (%)"><table class="experiment-table"><caption>Simulation policy success rates (%)</caption><thead><tr><th scope="col">Policy</th><th scope="col">Mid-training</th><th scope="col">LIBERO</th><th scope="col">LIBERO-Plus</th></tr></thead><tbody><tr><th scope="row">π₀</th><td>Base policy</td><td>94.4</td><td>53.6</td></tr><tr class="ours-row"><th scope="row">π₀</th><td>+ RynnWorld-80M</td><td>96.1</td><td>79.4</td></tr><tr><th scope="row">π₀.₅</th><td>Base policy</td><td>96.9</td><td>84.4</td></tr><tr class="ours-row"><th scope="row">π₀.₅</th><td>+ RynnWorld-80M</td><td>97.8</td><td>84.8</td></tr></tbody></table></div><p class="experiment-footnote">LIBERO evaluates language-conditioned manipulation; LIBERO-Plus evaluates robustness under perturbations. Synthetic mid-training adds both data and optimization compute.</p></article>
+ <article class="experiment-panel" id="prediction-results"><span class="experiment-eyebrow">VIDEO PREDICTION</span><h3>Prediction quality across real-robot and public evaluation sets</h3><p>Open-loop video metrics complement the closed-loop policy results above. PSNR ↑ / SSIM ↑ / LPIPS ↓.</p>
+ <details class="prediction-details"><summary>View video prediction metrics and baseline comparisons</summary><h4>Held-out episodes on Marvin-WUJI and Astribot-S1</h4><div class="experiment-table-scroll"><table class="rt">
               <tr><th>Method</th><th colspan="3">Marvin-WUJI Eval</th><th colspan="3">Astribot-S1 Eval</th></tr>
-              <tr><th></th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr>
+              <tr><th></th><th>PSNR↑</th><th>SSIM↑</th><th>LPIPS↓</th><th>PSNR↑</th><th>SSIM↑</th><th>LPIPS↓</th></tr>
               <tr><td>Cosmos3-Edge</td><td>20.03</td><td>0.78</td><td>0.31</td><td>13.99</td><td>0.42</td><td>0.54</td></tr>
               <tr><td>Cosmos3-Nano</td><td>20.09</td><td class="best">0.80</td><td>0.26</td><td>14.22</td><td>0.53</td><td>0.45</td></tr>
               <tr><td>RynnWorld-Teleop</td><td>20.89</td><td>0.76</td><td>0.19</td><td>N/A</td><td>N/A</td><td>N/A</td></tr>
               <tr><td><b>RynnWorld-Latent</b></td><td class="best">21.86</td><td class="best">0.80</td><td class="best">0.12</td><td class="best">15.96</td><td class="best">0.60</td><td class="best">0.34</td></tr>
             </table>
-          </div>
-          <p class="desc" style="margin:20px 0 12px;">Open-loop rollout quality on the DreamDojo GR-1 evaluation sets (higher PSNR/SSIM and lower LPIPS is better).</p>
-          <div class="tblwrap">
-            <table class="rt">
+          </div><h4>DreamDojo GR-1 evaluation sets</h4><div class="experiment-table-scroll"><table class="rt">
               <tr><th>Model</th><th colspan="3">In-lab Eval</th><th colspan="3">EgoDex Eval</th><th colspan="3">DreamDojo-HV Eval</th></tr>
-              <tr><th></th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr>
+              <tr><th></th><th>PSNR↑</th><th>SSIM↑</th><th>LPIPS↓</th><th>PSNR↑</th><th>SSIM↑</th><th>LPIPS↓</th><th>PSNR↑</th><th>SSIM↑</th><th>LPIPS↓</th></tr>
               <tr><td>Cosmos-Predict2.5</td><td>20.58</td><td>0.77</td><td>0.22</td><td>19.95</td><td>0.79</td><td>0.22</td><td>18.27</td><td>0.75</td><td>0.24</td></tr>
               <tr><td>DreamDojo-2B</td><td>21.11</td><td>0.77</td><td>0.22</td><td>20.41</td><td>0.78</td><td>0.23</td><td>18.81</td><td>0.75</td><td>0.24</td></tr>
               <tr><td>DreamDojo-14B</td><td>21.41</td><td>0.79</td><td>0.21</td><td>20.53</td><td>0.79</td><td>0.21</td><td>18.92</td><td>0.75</td><td>0.23</td></tr>
               <tr><td><b>RynnWorld-Latent</b></td><td class="best">21.42</td><td class="best">0.82</td><td class="best">0.20</td><td class="best">20.89</td><td class="best">0.81</td><td class="best">0.19</td><td class="best">19.22</td><td class="best">0.79</td><td class="best">0.21</td></tr>
             </table>
-          </div>
-          <p class="desc" style="margin:20px 0 12px;">Closed-loop success rate (%) on real-world manipulation tasks, 35 trials each. Bold marks the best within each training-setting block; N/A = not applicable to Astribot-S1 (mobile-base motion not modelled).</p>
-          <div class="tblwrap">
-            <table class="rt">
-              <tr><th>Method</th><th>Training Setting</th><th colspan="2">Marvin-WUJI</th><th colspan="2">Astribot-S1</th></tr>
-              <tr><th></th><th></th><th>Plate Placement</th><th>Plate Wiping</th><th>Steak Serving</th><th>Plate Retrieval</th></tr>
-              <tr><td colspan="6" style="text-align:left;font-style:italic">Digital teleoperation</td></tr>
-              <tr><td>&pi;<sub>0</sub></td><td>Real only</td><td>80.00</td><td>71.43</td><td>37.14</td><td>45.71</td></tr>
-              <tr><td>&pi;<sub>0</sub></td><td>Real + Digital Teleop</td><td>88.57</td><td class="best">94.29</td><td>51.43</td><td>51.43</td></tr>
-              <tr><td>&pi;<sub>0.5</sub></td><td>Real only</td><td>82.86</td><td>77.14</td><td>40.00</td><td>45.71</td></tr>
-              <tr><td>&pi;<sub>0.5</sub></td><td>Digital Teleop only</td><td>57.14</td><td>54.29</td><td>28.57</td><td>31.43</td></tr>
-              <tr><td>&pi;<sub>0.5</sub></td><td>Real + RynnWorld-Teleop</td><td>85.71</td><td>82.86</td><td>N/A</td><td>N/A</td></tr>
-              <tr><td>&pi;<sub>0.5</sub></td><td>Real + Digital Teleop</td><td class="best">91.43</td><td>91.43</td><td class="best">54.29</td><td class="best">57.14</td></tr>
-              <tr><td colspan="6" style="text-align:left;font-style:italic">Large-scale synthetic mid-training</td></tr>
-              <tr><td>&pi;<sub>0</sub></td><td>RynnWorld-80M + Real</td><td>85.71</td><td>82.86</td><td>48.57</td><td>54.29</td></tr>
-              <tr><td>&pi;<sub>0.5</sub></td><td>Real + Ego2Robot</td><td>88.57</td><td>91.43</td><td>N/A</td><td>N/A</td></tr>
-              <tr><td>&pi;<sub>0.5</sub></td><td>RynnWorld-80M + Real</td><td class="best">94.29</td><td class="best">97.14</td><td class="best">60.00</td><td class="best">68.57</td></tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
+          </div></details></article></section>
 
     <section>
       <h2 class="h2">BibTeX</h2>
@@ -1504,6 +1401,8 @@ html[data-theme="light"]{
     // 启动第二个 (Navigation Demos - 双列)
     // 已改为静态两列网格，无需 initCarousel
   </script>
+  <script src="assets/gallery-data.js" defer></script>
+  <script src="assets/gallery.js" defer></script>
 </body>
 </html>
 

@@ -100,17 +100,6 @@ window.RYNN_GALLERY = {
       "duration": 2.7
     },
     {
-      "id": "Marvin-WUJI-gen_0015054",
-      "platform": "Marvin-WUJI",
-      "title": "Marvin-WUJI · Example 07",
-      "comparison": false,
-      "src": "assets/selected/generation/Marvin-WUJI/gen_0015054.mp4",
-      "poster": "assets/selected/generation/Marvin-WUJI/gen_0015054.jpg",
-      "width": 832,
-      "height": 464,
-      "duration": 2.7
-    },
-    {
       "id": "Astribot-S1-cmp_0000869",
       "platform": "Astribot-S1",
       "title": "Astribot-S1 · Example 01",

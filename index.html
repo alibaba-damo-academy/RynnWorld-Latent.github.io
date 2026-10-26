@@ -981,7 +981,8 @@ html[data-theme="light"]{
   <link rel="stylesheet" href="assets/experiments.css">
 <style>
 .human-robot-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.human-robot-card{margin:0;padding:16px;border:1px solid var(--border,#dce2eb);border-radius:20px;background:var(--panel,transparent);overflow:hidden}.human-robot-card video{display:block;width:100%;height:330px;object-fit:contain;background:#10151d;border-radius:12px}.human-robot-card h3{font-size:21px;margin:16px 0 5px}.human-robot-card p{margin:0;font-size:15px;opacity:.75}@media(max-width:700px){.human-robot-grid{grid-template-columns:1fr}.human-robot-card video{height:auto;max-height:400px}}
-</style></head>
+</style><link rel="stylesheet" href="assets/project-video.css">
+</head>
 
 <body>
   <!-- 背景 -->
@@ -1021,26 +1022,22 @@ html[data-theme="light"]{
         <h2 class="title">A Cross-Embodiment World Model Conditioned on Universal Latent Actions</h2>
       </div>
 
-            <div class="authors">
-        <span class="a"><a href="https://maxwell-zhao.github.io/" target="_blank" rel="noopener">Haoyu Zhao<sup>*</sup></a></span>
-        <span class="a">Yinzhou Tang<sup>*</sup></span>
-        <span class="a">Zixuan Wang<sup>*</sup></span>
-        <span class="a">Minghao Zhu</span>
-        <span class="a">Dongchi Huang</span>
-        <span class="a">Xingyue Zhao</span>
-        <span class="a">Qin Zhao</span>
-        <span class="a">Kehan Li</span>
-        <span class="a">Siteng Huang<sup>&dagger;</sup></span>
-        <span class="a">Xin Li</span>
-        <span class="a">Zhongyu Li<sup>&dagger;</sup></span>
-      </div>
-      
-            <div class="aff" style="font-size: 15px; margin-top: 10px; color: var(--muted);">
-        DAMO Academy, Alibaba Group &middot; Hong Kong Embodied AI Lab &middot; CUHK &middot; Hupan Lab<br/>
-        <span style="display:inline-block; margin: 0 10px;"><sup>*</sup> Core contributors</span>
-        <span style="display:inline-block; margin: 0 10px;"><sup>&dagger;</sup> Corresponding authors</span>
-      </div>
-
+<div class="authors">
+<span class="a"><a href="https://maxwell-zhao.github.io/" target="_blank" rel="noopener">Haoyu Zhao<sup>*,1,2,3</sup></a></span>
+<span class="a">Yinzhou Tang<sup>*,1</sup></span>
+<span class="a">Zixuan Wang<sup>*,1</sup></span>
+<span class="a">Minghao Zhu<sup>1</sup></span>
+<span class="a">Dongchi Huang<sup>1</sup></span>
+<span class="a">Xingyue Zhao<sup>1</sup></span>
+<span class="a">Qin Zhao<sup>2,3</sup></span>
+<span class="a">Kehan Li<sup>1,4</sup></span>
+<span class="a">Siteng Huang<sup>†,1,4</sup></span>
+<span class="a">Xin Li<sup>1,4</sup></span>
+<span class="a">Zhenyu Zeng<sup>1,4</sup></span>
+<span class="a">Mingxiu Chen<sup>1,4</sup></span>
+<span class="a">Deli Zhao<sup>1,4</sup></span>
+<span class="a">Zhongyu Li<sup>†,2,3</sup></span>
+</div><div class="aff updated-affiliations"><span><sup>1</sup> DAMO Academy, Alibaba Group</span><span><sup>2</sup> Hong Kong Embodied AI Lab</span><span><sup>3</sup> CUHK</span><span><sup>4</sup> Hupan Lab</span></div><p class="author-notes"><span><sup>*</sup> Core contributors</span><span><sup>†</sup> Corresponding authors</span></p>
       <!-- 图标按钮 -->
             <div class="pill-row">
         <a class="pill" href="https://github.com/alibaba-damo-academy/RynnWorld-Latent" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
@@ -1048,31 +1045,16 @@ html[data-theme="light"]{
         <a class="pill" href="https://www.modelscope.cn/models/DAMO_Academy/RynnWorld-Latent" target="_blank" rel="noopener"><i class="fa-solid fa-cube"></i> ModelScope</a>
       </div>
 
-      <!-- 宣传视频  -->
-      <section>
-      <div class="container"> 
-        <!-- <div style="display: flex; justify-content: center; margin-bottom: 16px;">
-          <div class="lang-switch">
-            <button class="l-btn active" onclick="switchVideo('en')" type="button">English</button>
-            <button class="l-btn" onclick="switchVideo('zh')" type="button">中文版</button>
-          </div>
-        </div> -->
-
-        <div class="promo-wrap"> 
-          <div class="promo-inner">
-                        <video
-              id="mainVideo"
-              preload="metadata"
-              src="assets/RynnWorld-Latent-demo.mp4"
-              poster="assets/RynnWorld-Latent-demo.jpg"
-              controls
-              playsinline>
-            </video>
-          </div>
-        </div>
-
-      </div>
-    </section>
+<section class="project-film" aria-label="Project video">
+ <div class="film-tabs" role="tablist" aria-label="Video platform">
+  <button id="film-tab-youtube" role="tab" aria-selected="true" aria-controls="film-youtube" tabindex="0">YouTube</button>
+  <button id="film-tab-bilibili" role="tab" aria-selected="false" aria-controls="film-bilibili" tabindex="-1">Bilibili</button>
+  <button id="film-tab-local" role="tab" aria-selected="false" aria-controls="film-local" tabindex="-1">Direct video</button>
+ </div>
+ <div id="film-youtube" class="film-panel" role="tabpanel" aria-labelledby="film-tab-youtube"><div class="film-frame"><iframe src="https://www.youtube.com/embed/uJG-qPs0y0A?si=OFImuy0RMu5otJRO" title="RynnWorld-Latent project video on YouTube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><a class="film-external" href="https://www.youtube.com/watch?v=uJG-qPs0y0A" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+ <div id="film-bilibili" class="film-panel" role="tabpanel" aria-labelledby="film-tab-bilibili" hidden><div class="film-frame"><iframe data-src="https://player.bilibili.com/player.html?isOutside=true&amp;aid=117506211580653&amp;bvid=BV1bcno6hEUF&amp;cid=43067706408&amp;p=1&amp;autoplay=0" title="RynnWorld-Latent project video on Bilibili" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><a class="film-external" href="https://www.bilibili.com/video/BV1bcno6hEUF/" target="_blank" rel="noopener">Watch on Bilibili ↗</a></div>
+ <div id="film-local" class="film-panel" role="tabpanel" aria-labelledby="film-tab-local" hidden><div class="film-frame"><video id="mainVideo" preload="none" src="assets/RynnWorld-Latent-demo.mp4" poster="assets/RynnWorld-Latent-demo.jpg" controls playsinline></video></div></div>
+</section>
     </div>
   </header>
 
@@ -1112,7 +1094,7 @@ html[data-theme="light"]{
     </div>
     <section id="action-conditioned">
       <h2 class="h2">Action-Conditioned Video Generation</h2>
-      <p class="gallery-intro">One initial observation and a supplied robot-action sequence define a rollout. Explore 25 selected examples across GR-1, Marvin-WUJI and Astribot-S1. Reference videos are shown alongside predictions where available.</p>
+      <p class="gallery-intro">One initial observation and a supplied robot-action sequence define a rollout. Explore 24 selected examples across GR-1, Marvin-WUJI and Astribot-S1. Reference videos are shown alongside predictions where available.</p>
       <div class="gallery-links"><a href="#action-following">See controlled action-following comparisons ↓</a><a href="#synthesis">Explore first-frame editing ↓</a></div>
       <div id="generation-gallery"></div>
     </section>
@@ -1174,7 +1156,7 @@ html[data-theme="light"]{
 
               <pre id="bibtexBlock"><code>@article{rynnworld2026latent,
   title   = {RynnWorld-Latent: A Cross-Embodiment World Model Conditioned on Universal Latent Actions},
-  author  = {Haoyu Zhao and Yinzhou Tang and Zixuan Wang and Minghao Zhu and Dongchi Huang and Xingyue Zhao and Qin Zhao and Kehan Li and Siteng Huang and Xin Li and Zhongyu Li},
+  author  = {Haoyu Zhao and Yinzhou Tang and Zixuan Wang and Minghao Zhu and Dongchi Huang and Xingyue Zhao and Qin Zhao and Kehan Li and Siteng Huang and Xin Li and Zhenyu Zeng and Mingxiu Chen and Deli Zhao and Zhongyu Li},
   year    = {2026}
 }</code></pre>
       </div>
@@ -1403,6 +1385,7 @@ html[data-theme="light"]{
   </script>
   <script src="assets/gallery-data.js" defer></script>
   <script src="assets/gallery.js" defer></script>
+<script src="assets/project-video.js"></script>
 </body>
 </html>
 

@@ -977,7 +977,7 @@ html[data-theme="light"]{
     @media(max-width:980px){.video-grid.three{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:768px){.video-grid.three,.video-grid.one{grid-template-columns:1fr}}
   </style>
-  <link rel="stylesheet" href="assets/gallery.css">
+  <link rel="stylesheet" href="assets/gallery.css?v=20261026b">
   <link rel="stylesheet" href="assets/experiments.css">
 <style>
 .human-robot-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.human-robot-card{margin:0;padding:16px;border:1px solid var(--border,#dce2eb);border-radius:20px;background:var(--panel,transparent);overflow:hidden}.human-robot-card video{display:block;width:100%;height:330px;object-fit:contain;background:#10151d;border-radius:12px}.human-robot-card h3{font-size:21px;margin:16px 0 5px}.human-robot-card p{margin:0;font-size:15px;opacity:.75}@media(max-width:700px){.human-robot-grid{grid-template-columns:1fr}.human-robot-card video{height:auto;max-height:400px}}
@@ -1047,12 +1047,12 @@ html[data-theme="light"]{
 
 <section class="project-film" aria-label="Project video">
  <div class="film-tabs" role="tablist" aria-label="Video platform">
-  <button id="film-tab-youtube" role="tab" aria-selected="true" aria-controls="film-youtube" tabindex="0">YouTube</button>
-  <button id="film-tab-bilibili" role="tab" aria-selected="false" aria-controls="film-bilibili" tabindex="-1">Bilibili</button>
+  <button id="film-tab-youtube" role="tab" aria-selected="false" aria-controls="film-youtube" tabindex="-1">YouTube</button>
+  <button id="film-tab-bilibili" role="tab" aria-selected="true" aria-controls="film-bilibili" tabindex="0">Bilibili</button>
   <button id="film-tab-local" role="tab" aria-selected="false" aria-controls="film-local" tabindex="-1">Direct video</button>
  </div>
- <div id="film-youtube" class="film-panel" role="tabpanel" aria-labelledby="film-tab-youtube"><div class="film-frame"><iframe src="https://www.youtube.com/embed/uJG-qPs0y0A?si=OFImuy0RMu5otJRO" title="RynnWorld-Latent project video on YouTube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><a class="film-external" href="https://www.youtube.com/watch?v=uJG-qPs0y0A" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
- <div id="film-bilibili" class="film-panel" role="tabpanel" aria-labelledby="film-tab-bilibili" hidden><div class="film-frame"><iframe data-src="https://player.bilibili.com/player.html?isOutside=true&amp;aid=117506211580653&amp;bvid=BV1bcno6hEUF&amp;cid=43067706408&amp;p=1&amp;autoplay=0" title="RynnWorld-Latent project video on Bilibili" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><a class="film-external" href="https://www.bilibili.com/video/BV1bcno6hEUF/" target="_blank" rel="noopener">Watch on Bilibili ↗</a></div>
+ <div id="film-youtube" class="film-panel" role="tabpanel" aria-labelledby="film-tab-youtube" hidden><div class="film-frame"><iframe data-src="https://www.youtube.com/embed/uJG-qPs0y0A?si=OFImuy0RMu5otJRO" title="RynnWorld-Latent project video on YouTube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><a class="film-external" href="https://www.youtube.com/watch?v=uJG-qPs0y0A" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+ <div id="film-bilibili" class="film-panel" role="tabpanel" aria-labelledby="film-tab-bilibili"><div class="film-frame"><iframe src="https://player.bilibili.com/player.html?isOutside=true&amp;aid=117506211580653&amp;bvid=BV1bcno6hEUF&amp;cid=43067706408&amp;p=1&amp;autoplay=0" title="RynnWorld-Latent project video on Bilibili" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><a class="film-external" href="https://www.bilibili.com/video/BV1bcno6hEUF/" target="_blank" rel="noopener">Watch on Bilibili ↗</a></div>
  <div id="film-local" class="film-panel" role="tabpanel" aria-labelledby="film-tab-local" hidden><div class="film-frame"><video id="mainVideo" preload="none" src="assets/RynnWorld-Latent-demo.mp4" poster="assets/RynnWorld-Latent-demo.jpg" controls playsinline></video></div></div>
 </section>
     </div>
@@ -1384,7 +1384,7 @@ html[data-theme="light"]{
     // 已改为静态两列网格，无需 initCarousel
   </script>
   <script src="assets/gallery-data.js" defer></script>
-  <script src="assets/gallery.js" defer></script>
+  <script src="assets/gallery.js?v=20261026b" defer></script>
 <script src="assets/project-video.js"></script>
 </body>
 </html>

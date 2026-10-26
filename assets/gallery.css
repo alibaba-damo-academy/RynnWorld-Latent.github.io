@@ -55,3 +55,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var
 html[data-theme="dark"] .platform-tabs button[aria-pressed="true"],html[data-theme="dark"] .play-comparison{color:#111827}
 
 .bg-layer{display:none}
+
+/* Generation comparisons occupy one of two equal columns, just like rollouts.
+   Full-row comparisons previously stranded the remaining single-camera card. */
+#generation-gallery .selected-card.comparison{grid-column:auto}
